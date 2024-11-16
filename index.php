@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
                  !-->
             </ul>
     </div>
-    <h1 style="color: yellow;">Train search</h1>
+    <h1 style="color: yellow;">Log Entry</h1>
     <form action="index.php" method="POST" id="formIntro">
         <label for="query">Enter Set or carriage:</label>
         <input type="text" id="query" name="query" required placeholder="707" value="707">
