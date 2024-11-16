@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
 </head>
 <body>
     <div class="social-header">
-    <ul>
+            <ul>
                 <li><a href="https://github.com/BergaDev">GitHub</a></li>
                 <li><a href="https://www.linkedin.com/in/matthew-bergamini">Linked-In</a></li>
                 <li><a href="https://www.instagram.com/could_be_a_berga/">Instagram</a></li>
