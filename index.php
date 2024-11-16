@@ -61,7 +61,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
                  !-->
             </ul>
     </div>
-    <h1 style="color: yellow;">Log Entry</h1>
+    <h1 style="color: yellow;">Train Track(ing)</h1>
     <form action="index.php" method="POST" id="formIntro">
         <label for="query">Enter Set or carriage:</label>
         <input type="text" id="query" name="query" required placeholder="707" value="707">
@@ -70,7 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
 
     <!-- Form start !-->
     <form action="results.php" method="POST">
-                <label for="selection">Select the set or carriage:</label>
+                <label for="selection">Select the set and carriage:</label>
                 <!--- First Select !--->
                 <select name="selectCar" id="selectCar" required>
                     <?php foreach ($searchResults as $row): ?>
@@ -103,6 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
                     <tr>
                         <td><?= htmlspecialchars($row["carNum"]) ?></td>
                         <td><?= htmlspecialchars($row["setNum"]) ?></td>
+                        <td><?= htmlspecialchars($row["typeName"]) ?></td>
                     </tr>
                 <?php endforeach; ?>
             </table>
