@@ -1,0 +1,139 @@
+h1 {
+    padding: 2px;
+    color: white;
+    text-align: left;
+    font-size: 2em;
+    font-family: 'pixer';
+}
+
+body {
+    background-color: #2D9DFF;
+}
+
+#main {
+    font-family: 'dotto';
+    text-align: center;
+    font-size: 4em;
+    color: yellow;
+}
+
+#formIntro {
+    color: yellow;
+}
+
+table {
+    color: white;
+    font-family: 'spaceMonoBold';
+    border-collapse: collapse;
+    border: 1px yellow;
+}
+
+#results {
+    color: white;
+    font-family: 'spaceMonoBold';
+}
+
+#error {
+    color: red;
+    font-family: 'spaceMonoBold';
+    font-size: large;
+}
+
+.main-cont {
+    display: flex;
+    justify-content: center;
+  align-items: center;   
+  height: 100vh;        
+}
+
+.homeLink {
+    text-decoration: none;
+    color: inherit;
+}
+
+#disc {
+    font-family: 'Yellowtail';
+    font-size: 2em;
+    color: white;
+}
+
+ul {
+    color: white;
+}
+
+form {
+    font-family: 'spaceMonoBold';
+}
+
+td {
+    font-family: 'spaceMonoReg';
+}
+
+.social-header ul {
+    display: flex;          
+    list-style-type: none;    
+    padding: 0px;               
+    margin: 2px;                
+}
+
+.social-header li {
+    margin-right: 15px;
+    color: white;
+    font-size: 1.2em;
+    font-family: 'pixer';
+}
+
+a:link {
+    color: white;
+}
+a:hover {
+    color: yellow;
+}
+a:visited {
+    color: inherit;
+    text-decoration: none;
+}
+
+#goodResult {
+    font-family: 'spaceMonoReg';
+}
+
+p {
+    font-family: 'gowun';
+    color: white;
+}
+
+@font-face {
+    font-family: pixer;
+    src: url(fonts/Pixer-Regular.woff);
+}
+
+@font-face {
+    font-family: Sixtyfour;
+    src: url(fonts/Sixtyfour-Regular.ttf);
+}
+
+@font-face {
+    font-family: Yellowtail;
+    src: url(fonts/Yellowtail-Regular.ttf);
+}
+
+@font-face {
+    font-family: dotto;
+    src: url(fonts/Doto-VariableFont_ROND\,wght.ttf);
+}
+
+@font-face {
+    font-family: spaceMonoReg;
+    src: url(fonts/SpaceMono-Regular.ttf);
+}
+
+@font-face {
+    font-family: spaceMonoBold;
+    src: url(fonts/SpaceMono-Bold.ttf);
+}
+
+@font-face {
+    font-family: gowun;
+    src: url(fonts/GowunDodum-Regular.ttf);
+}
