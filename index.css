@@ -17,6 +17,11 @@ body {
     color: yellow;
 }
 
+.homeLink {
+    text-decoration: none;
+    color: inherit;
+}
+
 #formIntro {
     color: yellow;
 }

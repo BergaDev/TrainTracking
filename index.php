@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css" />
     <title>Log Entry</title>
-    <h1>Matthew Bergamini</h1>
+    <h1><a href="../index.html" class="homeLink">Matthew Bergamini</a></h1>
     <script>
         // Need to make this less hacky
         /*
