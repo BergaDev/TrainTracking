@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="index.css" />
-    <title>Train Search</title>
+    <title>Log Entry</title>
     <h1>Matthew Bergamini</h1>
     <script>
         // Need to make this less hacky
