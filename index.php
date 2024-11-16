@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
                 <input type="date" id="date" name="date">
 
 
-                <button type="submit" name="select">Submit Selection</button>
+                <button type="submit" name="select">Submit</button>
             </form>
             <!--- Form End !-->
 
