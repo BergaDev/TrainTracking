@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectCar']) && !empt
         echo "<p>Error inserting data: " . $conn->error . "</p>";
     }
 
-    $query = "SELECT * FROM userData";
+    $query = "SELECT * FROM userData WHERE userID = $userID";
     $result = $conn->query($query);
 
     $allResults = [];

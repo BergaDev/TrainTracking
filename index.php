@@ -68,21 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
         <button type="submit">Search</button>
     </form>
 
-    <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
-        <h2 style="color: white;">Search Results:</h2>
-        <?php if (!empty($searchResults)): ?>
-            <table border="1">
-                <tr><th>Carriage Number</th><th>Set Number</th><th>Type Name</th></tr>
-                <?php foreach ($searchResults as $row): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($row["carNum"]) ?></td>
-                        <td><?= htmlspecialchars($row["setNum"]) ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </table>
-
-            <!-- Form start !-->
-            <form action="results.php" method="POST">
+    <!-- Form start !-->
+    <form action="results.php" method="POST">
                 <label for="selection">Select the set or carriage:</label>
                 <!--- First Select !--->
                 <select name="selectCar" id="selectCar" required>
@@ -106,6 +93,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
                 <button type="submit" name="select">Submit Selection</button>
             </form>
             <!--- Form End !-->
+
+    <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
+        <h2 style="color: white;">Search Results:</h2>
+        <?php if (!empty($searchResults)): ?>
+            <table border="1">
+                <tr><th>Carriage Number</th><th>Set Number</th><th>Type Name</th></tr>
+                <?php foreach ($searchResults as $row): ?>
+                    <tr>
+                        <td><?= htmlspecialchars($row["carNum"]) ?></td>
+                        <td><?= htmlspecialchars($row["setNum"]) ?></td>
+                    </tr>
+                <?php endforeach; ?>
+            </table>
 
         <?php else: ?>
             <p>No results found.</p>
