@@ -71,21 +71,33 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
     <!-- Form start !-->
     <form action="results.php" method="POST">
                 <label for="selection">Select the set and carriage:</label>
-                <!--- First Select !--->
-                <select name="selectCar" id="selectCar" required>
-                    <?php foreach ($searchResults as $row): ?>
-                        <option value="<?= htmlspecialchars($row["carNum"]) ?>">
-                            Carriage Number: <?= htmlspecialchars($row["carNum"]) ?>
+                <!--- First Select 
+                Changed to merge set and car into one option !--->
+                <select name="selectedCarSet" id="selectedCarSet" required>
+                    <?php
+                    // Group results by setNum
+                    $groupedResults = [];
+                    foreach ($searchResults as $row) {
+                        $groupedResults[$row["setNum"]][] = $row;
+                    }
+
+                    foreach ($groupedResults as $setNum => $carriages): 
+                    ?>
+                        <!-- Single Set Option -->
+                        <option value="<?= htmlspecialchars("No Car Specified" . '|' . $setNum) ?>">
+                            Set: <?= htmlspecialchars($setNum) ?>
                         </option>
+                        
+                        <!-- Carriage + Set Options -->
+                        <?php foreach ($carriages as $row): ?>
+                            <option value="<?= htmlspecialchars($row["carNum"] . "|" . $row["setNum"]) ?>">
+                                Carriage: <?= htmlspecialchars($row["carNum"]) ?> - Set: <?= htmlspecialchars($row["setNum"]) ?>
+                            </option>
+                        <?php endforeach; ?>
                     <?php endforeach; ?>
                 </select>
-                <select name="selectSet" id="selectSet" required>
-                    <?php foreach ($searchResults as $row): ?>
-                        <option value="<?= htmlspecialchars($row["setNum"]) ?>">
-                            Set Number: <?= htmlspecialchars($row["setNum"]) ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
+
+                <!-- date !-->
                 <label for="date">Date:</label>
                 <input type="date" id="date" name="date">
 

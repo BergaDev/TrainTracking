@@ -13,13 +13,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectCar']) && !empty($_POST['selectSet'])) {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectedCarSet'])) {
     $userID = '707';
-    $carNum = $conn->real_escape_string($_POST['selectCar']);
-    $setNum = $conn->real_escape_string($_POST['selectSet']);
+    list($carNum, $setNum) = explode('|', $_POST['selectedCarSet']);
+
+    $carNumSave = htmlspecialchars($carNum);
+    $setNumSave = htmlspecialchars($setNum);
     $date = $conn->real_escape_string($_POST['date']);
 
-    $insertSql = "INSERT INTO userData (userID, carNum, setNum, date) VALUES ('$userID', '$carNum', '$setNum', '$date')";
+    $insertSql = "INSERT INTO userData (userID, carNum, setNum, date) VALUES ('$userID', '$carNumSave', '$setNumSave', '$date')";
     if ($conn->query($insertSql) === TRUE) {
     } else {
         echo "<p>Error inserting data: " . $conn->error . "</p>";
@@ -35,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectCar']) && !empt
         }
     }
 } else {
-    echo "<p>Invalid data submitted!</p>";
+    echo "<p>Invalid data submitted!  Testing: $carNumSave and $setNumSave </p>";
 }
 ?>
 
@@ -67,10 +69,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectCar']) && !empt
         $theSet = 0;
         $theCar = 0;
         $setCount = 0;
+        $carCount = 0;
 
-        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['selectSet'], $_POST['selectCar'])) {
-            $theSet = htmlspecialchars($_POST['selectSet']);
-            $theCar = htmlspecialchars($_POST['selectCar']);
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['selectedCarSet'])) {
+            list($carNum, $setNum) = explode('|', $_POST['selectedCarSet']);
+            $theSet = htmlspecialchars($setNum);
+            $theCar = htmlspecialchars($carNum);
             echo "<p>This is set number {$theSet} and car number {$theCar}</p>";
         } else {
             echo "<p>No set number provided.</p>";
@@ -81,9 +85,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectCar']) && !empt
                 $setCount++;
             }
         }
+
+        foreach ($allResults as $row) {
+            if ($row["carNum"] == $theCar) {
+                $carCount++;
+            }
+        }
         ?>
 
-        <p>You have ridden in this set: <?= $setCount; ?> times</p>
+        <?php
+        if ($setCount >= 1 && $carCount == 0) {
+            echo "<p>You have rode this set: $setCount times</p>";
+        } else if ($setCount >= 1 && $carCount >= 1) {
+            echo "<p>You have rode this set: $setCount times and the carriage: $carCount</p>";
+        }
+        ?>
 
         <table border="1">
             <tr>
