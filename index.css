@@ -51,6 +51,10 @@ table {
   height: 100vh;        
 }
 
+.allEntriesText {
+    font-family: 'spaceMonoBold';
+}
+
 .homeLink {
     text-decoration: none;
     color: inherit;

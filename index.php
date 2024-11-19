@@ -30,6 +30,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
         }
     }
 }
+
+$allEntries = null;
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
+
+    $sql2 = "SELECT * FROM userData WHERE userID LIKE '707'";
+    $result = $conn->query($sql2);
+
+    $allEntries = [];
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $allEntries[] = $row;
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -65,11 +80,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
     <form action="index.php" method="POST" id="formIntro">
         <label for="query">Enter Set or carriage:</label>
         <input type="text" id="query" name="query" required placeholder="A73">
-        <button type="submit">Search</button>
+        <button type="submit" id="SearchNum">Search</button>
+    </form>
+
+    <form action="index.php" method="POST">
+        <button type="submit" name="show_all" id="show_all">Show All Entries</button>
     </form>
 
     <!-- Form start !-->
-    <form action="results.php" method="POST">
+    <form action="results.php" method="POST" id="selectForm">
                 <label for="selection">Select the set and carriage:</label>
                 <!--- First Select 
                 Changed to merge set and car into one option !--->
@@ -109,25 +128,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
             </form>
             <!--- Form End !-->
 
-    <?php if ($_SERVER["REQUEST_METHOD"] == "POST"): ?>
+    <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($searchResults)): ?>
         <h2 style="color: white;">Search Results:</h2>
-        <?php if (!empty($searchResults)): ?>
-            <table border="1">
-                <tr><th>Carriage Number</th><th>Set Number</th><th>Type Name</th></tr>
-                <?php foreach ($searchResults as $row): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($row["carNum"]) ?></td>
-                        <td><?= htmlspecialchars($row["setNum"]) ?></td>
-                        <td><?= htmlspecialchars($row["typeName"]) ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </table>
-
-        <?php else: ?>
-            <p>No results found.</p>
-        <?php endif; ?>
+        <table border="1">
+            <tr><th>Carriage Number</th><th>Set Number</th><th>Type Name</th></tr>
+            <?php foreach ($searchResults as $row): ?>
+                <tr>
+                    <td><?= htmlspecialchars($row["carNum"]) ?></td>
+                    <td><?= htmlspecialchars($row["setNum"]) ?></td>
+                    <td><?= htmlspecialchars($row["typeName"]) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
     <?php endif; ?>
 
+    <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($allEntries)): ?>
+        <h2 style="color: yellow; font-family: 'spaceMonoBold'" id="allEntriesText">All Entries:</h2>
+        <table border="1">
+            <tr>
+                <th>Set Number</th>
+                <th>Car Number</th>
+                <th>Note</th>
+                <th>Date & Time</th>
+            </tr>
+            <?php foreach ($allEntries as $row): ?>
+                <tr>
+                    <td><?= htmlspecialchars($row["setNum"]) ?></td>
+                    <td><?= htmlspecialchars($row["carNum"]) ?></td>
+                    <td><?= htmlspecialchars($row["note"]) ?></td>
+                    <td><?= htmlspecialchars($row["date"]) ?></td>
+                </tr>
+            <?php endforeach; ?>
+        </table>
+    <?php elseif (empty($searchResults) && empty($allEntries)): ?>
+        <p id="noResultError">No results found.</p>
+    <?php endif; ?>
+
+
+    <script>
+        //Hide error on load
+        window.onload = function() {
+            const element = document.getElementById('noResultError');
+            if (element) {
+                element.style.display = 'none';
+            }
+        };
+    </script>
 </body>
 </html>
 
