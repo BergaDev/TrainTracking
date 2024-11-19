@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
                     foreach ($groupedResults as $setNum => $carriages): 
                     ?>
                         <!-- Single Set Option -->
-                        <option value="<?= htmlspecialchars("No Car Specified" . '|' . $setNum) ?>">
+                        <option value="<?= htmlspecialchars($setNum . '|' . $setNum) ?>">
                             Set: <?= htmlspecialchars($setNum) ?>
                         </option>
                         
@@ -97,9 +97,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
                     <?php endforeach; ?>
                 </select>
 
+                <label for="note">Note:</label>
+                <input type="text" id="note" name="note">
+
                 <!-- date !-->
                 <label for="date">Date:</label>
-                <input type="date" id="date" name="date" required>
+                <input type="datetime-local" id="date" name="date" required>
 
 
                 <button type="submit" name="select">Submit</button>

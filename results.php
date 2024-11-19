@@ -20,8 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectedCarSet'])) {
     $carNumSave = htmlspecialchars($carNum);
     $setNumSave = htmlspecialchars($setNum);
     $date = $conn->real_escape_string($_POST['date']);
+    $note = htmlspecialchars($_POST['note']);
 
-    $insertSql = "INSERT INTO userData (userID, carNum, setNum, date) VALUES ('$userID', '$carNumSave', '$setNumSave', '$date')";
+    $insertSql = "INSERT INTO userData (userID, carNum, setNum, note, date) VALUES ('$userID', '$carNumSave', '$setNumSave', '$note', '$date')";
     if ($conn->query($insertSql) === TRUE) {
     } else {
         echo "<p>Error inserting data: " . $conn->error . "</p>";
@@ -105,11 +106,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectedCarSet'])) {
             <tr>
                 <th>Carriage Number</th>
                 <th>Set Number</th>
+                <th>Note</th>
+                <th>Date</th>
             </tr>
             <?php foreach ($allResults as $row): ?>
                 <tr>
                     <td><?= htmlspecialchars($row["carNum"]) ?></td>
                     <td><?= htmlspecialchars($row["setNum"]) ?></td>
+                    <td><?= htmlspecialchars($row["note"]) ?></td>
+                    <td><?= htmlspecialchars($row["date"]) ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>
