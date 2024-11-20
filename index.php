@@ -101,18 +101,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
                     }
 
                     foreach ($groupedResults as $setNum => $carriages): 
-                    ?>
-                        <!-- Single Set Option -->
-                        <option value="<?= htmlspecialchars($setNum . '|' . $setNum) ?>">
-                            Set: <?= htmlspecialchars($setNum) ?>
-                        </option>
-                        
+                    ?>    
                         <!-- Carriage + Set Options -->
                         <?php foreach ($carriages as $row): ?>
                             <option value="<?= htmlspecialchars($row["carNum"] . "|" . $row["setNum"]) ?>">
                                 Carriage: <?= htmlspecialchars($row["carNum"]) ?> - Set: <?= htmlspecialchars($row["setNum"]) ?>
                             </option>
                         <?php endforeach; ?>
+
+                        <!-- Single Set Option -->
+                        <option value="<?= htmlspecialchars($setNum . '|' . $setNum) ?>">
+                            Set: <?= htmlspecialchars($setNum) ?>
+                        </option>
                     <?php endforeach; ?>
                 </select>
 
