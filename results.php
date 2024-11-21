@@ -1,6 +1,4 @@
 <?php
-var_dump($_POST);
-
 $config = require 'config.php';
 $servername = $config['servername'];
 $username = $config['username'];
