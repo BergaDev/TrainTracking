@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectedCarSet'])) {
         echo "<p>Error inserting data: " . $conn->error . "</p>";
     }
 
-    $query = "SELECT * FROM userData WHERE userID = $userID";
+    $query = "SELECT * FROM userData WHERE userID = $userID ORDER BY `userData`.`date` DESC";
     $result = $conn->query($query);
 
     $allResults = [];

@@ -35,7 +35,7 @@ $allEntries = null;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
 
-    $sql2 = "SELECT * FROM userData WHERE userID LIKE '707'";
+    $sql2 = "SELECT * FROM userData WHERE userID LIKE '707' ORDER BY `userData`.`date` DESC";
     $result = $conn->query($sql2);
 
     $allEntries = [];
