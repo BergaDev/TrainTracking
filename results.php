@@ -1,4 +1,6 @@
 <?php
+var_dump($_POST);
+
 $config = require 'config.php';
 $servername = $config['servername'];
 $username = $config['username'];
@@ -21,8 +23,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectedCarSet'])) {
     $setNumSave = htmlspecialchars($setNum);
     $date = $conn->real_escape_string($_POST['date']);
     $note = htmlspecialchars($_POST['note']);
+    $subID = htmlspecialchars($_POST['subID']);
 
-    $insertSql = "INSERT INTO userData (userID, carNum, setNum, note, date) VALUES ('$userID', '$carNumSave', '$setNumSave', '$note', '$date')";
+    $insertSql = "INSERT INTO userData (userID, carNum, setNum, note, date, subID) VALUES ('$userID', '$carNumSave', '$setNumSave', '$note', '$date', '$subID')";
     if ($conn->query($insertSql) === TRUE) {
     } else {
         echo "<p>Error inserting data: " . $conn->error . "</p>";

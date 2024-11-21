@@ -121,10 +121,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
 
                 <!-- date !-->
                 <label for="date">Date:</label>
-                <input type="datetime-local" id="date" name="date" required>
+                <input id="date" type="datetime-local" id="date" name="date" required onclick="newSubID()"">
 
 
-                <button type="submit" name="select">Submit</button>
+                <button type="submit" name="subID" value="" id="subID">Submit</button>
             </form>
             <!--- Form End !-->
 
@@ -172,6 +172,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
             if (element) {
                 element.style.display = 'none';
             }
+        };
+
+        function newSubID() {
+            const now = new Date();
+            const time = now.getTime();
+            const genID = (time * Math.floor(Math.random() * 100));
+            //alert('genID as: ' + genID);
+
+            const submitValue = document.getElementById('subID');
+            submitValue.value = genID;
         };
     </script>
 </body>
