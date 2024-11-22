@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
                  !-->
             </ul>
     </div>
-    <h1 style="color: yellow;">Train Track(ing)</h1>
+    <h1 style="color: yellow;">Train Track(ing) - Locations Testing</h1>
     <form action="index.php" method="POST" id="formIntro">
         <label for="query">Enter Set or carriage:</label>
         <input type="text" id="query" name="query" required placeholder="A73">
