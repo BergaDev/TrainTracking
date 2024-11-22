@@ -24,9 +24,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectedCarSet'])) {
     $subID = htmlspecialchars($_POST['subID']);
 
     $insertSql = "INSERT INTO userData (userID, carNum, setNum, note, date, subID) VALUES ('$userID', '$carNumSave', '$setNumSave', '$note', '$date', '$subID')";
-    if ($conn->query($insertSql) === TRUE) {
-    } else {
-        echo "<p>Error inserting data: " . $conn->error . "</p>";
+    try {
+        if ($conn->query($insertSql) === TRUE) {
+        }
+    } catch (mysqli_sql_exception $e) {
+        if ($e->getCode() === 1062) { 
+            echo "<p style='color: red;'>Duplicate Data entry, perhaps site refresh and submission</p>";
+        } else {
+            echo "<p style='color: red;'>Error inserting data: " . $e->getMessage() . "</p>";
+        }
     }
 
     $query = "SELECT * FROM userData WHERE userID = $userID ORDER BY `userData`.`date` DESC";
