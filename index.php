@@ -150,6 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
                 <th>Car Number</th>
                 <th>Note</th>
                 <th>Date & Time</th>
+                <th>Edit</th>
             </tr>
             <?php foreach ($allEntries as $row): ?>
                 <tr>
@@ -157,6 +158,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
                     <td><?= htmlspecialchars($row["carNum"]) ?></td>
                     <td><?= htmlspecialchars($row["note"]) ?></td>
                     <td><?= htmlspecialchars($row["date"]) ?></td>
+                    <td><?= htmlspecialchars($row["subID"]) ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>
