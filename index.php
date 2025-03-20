@@ -114,10 +114,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
                             Set: <?= htmlspecialchars($setNum) ?>
                         </option>
                     <?php endforeach; ?>
-                </select>
+                </select><br></br>
 
-                <label for="note">Note:</label>
-                <input type="text" id="note" name="note">
+                <label for="dep">Origin:</label>
+                <input type="text" id=dep" name="dep">
+                <label for="des">Destination:</label>
+                <input type="text" id=des" name="des"><br></br>
 
                 <!-- date !-->
                 <label for="date">Date:</label>
@@ -148,7 +150,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
             <tr>
                 <th>Set Number</th>
                 <th>Car Number</th>
-                <th>Note</th>
+                <th>Departure</th>
+                <th>Destination</th>
                 <th>Date & Time</th>
                 <th>Edit</th>
             </tr>
@@ -156,7 +159,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
                 <tr>
                     <td><?= htmlspecialchars($row["setNum"]) ?></td>
                     <td><?= htmlspecialchars($row["carNum"]) ?></td>
-                    <td><?= htmlspecialchars($row["note"]) ?></td>
+                    <td><?= htmlspecialchars($row["dep"]) ?></td>
+                    <td><?= htmlspecialchars($row["des"]) ?></td>
                     <td><?= htmlspecialchars($row["date"]) ?></td>
                     <td><?= htmlspecialchars($row["subID"]) ?></td>
                 </tr>
