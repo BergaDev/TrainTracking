@@ -115,6 +115,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectedCarSet'])) {
                 <th>Set Number</th>
                 <th>Note</th>
                 <th>Date</th>
+                <th>Edit</th>
             </tr>
             <?php foreach ($allResults as $row): ?>
                 <tr>
@@ -122,6 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectedCarSet'])) {
                     <td><?= htmlspecialchars($row["setNum"]) ?></td>
                     <td><?= htmlspecialchars($row["note"]) ?></td>
                     <td><?= htmlspecialchars($row["date"]) ?></td>
+                    <td><?= htmlspecialchars($row["subID"]) ?></td>
                 </tr>
             <?php endforeach; ?>
         </table>
