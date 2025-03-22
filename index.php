@@ -15,8 +15,9 @@ if ($conn->connect_error) {
 
 $searchResults = null;
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
-    $query = $conn->real_escape_string($_POST['query']);
+//For train search
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['setCar'])) {
+    $query = $conn->real_escape_string($_POST['setCar']);
 
     
     $sql = "SELECT * FROM car_sets WHERE carNum LIKE '%$query%' OR setNum LIKE '%$query%'";
@@ -27,6 +28,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['query'])) {
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             $searchResults[] = $row;
+        }
+    }
+}
+
+//For station search
+if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['station'])) {
+    $query = $conn->real_escape_string($_POST['station']);
+
+    
+    $sql = "SELECT * FROM stations WHERE name LIKE '%$query%'";
+    $result = $conn->query($sql);
+
+    
+    $stationResults = [];
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $stationResults[] = $row;
         }
     }
 }
@@ -77,9 +95,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
             </ul>
     </div>
     <h1 style="color: yellow;">Train Track(ing)</h1>
-    <form action="index.php" method="POST" id="formIntro">
-        <label for="query">Enter Set or carriage:</label>
-        <input type="text" id="query" name="query" required placeholder="A73">
+
+    <form action="index.php" method="POST" class="ajaxForm" data-target="#setContainer">
+        <label for="query" class="searchArea">Enter Set or carriage:</label>
+        <input type="text" id="query" name="setCar" required placeholder="A73">
+        <button type="submit" id="SearchNum">Search</button>
+    </form>
+
+    <form action="index.php" method="POST" class="ajaxForm" data-target="#depContainer">
+        <label for="query" class="searchArea">Enter Departure Station:</label>
+        <input type="text" id="query" name="station" required placeholder="Thirroul">
+        <button type="submit" id="SearchNum">Search</button>
+    </form>
+
+    <form action="index.php" method="POST" class="ajaxForm" data-target="#desContainer">
+        <label for="query" class="searchArea">Enter Destination Station:</label>
+        <input type="text" id="query" name="station" required placeholder="Central">
         <button type="submit" id="SearchNum">Search</button>
     </form>
 
@@ -87,46 +118,79 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
         <button type="submit" name="show_all" id="show_all">Show All Entries</button>
     </form>
 
-    <!-- Form start !-->
-    <form action="results.php" method="POST" id="selectForm">
-                <label for="selection">Select the set and carriage:</label>
-                <!--- First Select 
-                Changed to merge set and car into one option !--->
-                <select name="selectedCarSet" id="selectedCarSet" required>
-                    <?php
-                    // Group results by setNum
-                    $groupedResults = [];
-                    foreach ($searchResults as $row) {
-                        $groupedResults[$row["setNum"]][] = $row;
-                    }
+    <form action="results.php" method="POST" id="combinedForm">
+        <div id="setContainer">
+            <label for="selection">Select the set and carriage:</label>
+            <select name="selectedCarSet" id="selectedCarSet" required>
+                <?php
+                // Group results by setNum
+                $groupedResults = [];
+                foreach ($searchResults as $row) {
+                    $groupedResults[$row["setNum"]][] = $row;
+                }
 
-                    foreach ($groupedResults as $setNum => $carriages): 
-                    ?>    
-                        <!-- Carriage + Set Options -->
-                        <?php foreach ($carriages as $row): ?>
-                            <option value="<?= htmlspecialchars($row["carNum"] . "|" . $row["setNum"]) ?>">
-                                Carriage: <?= htmlspecialchars($row["carNum"]) ?> - Set: <?= htmlspecialchars($row["setNum"]) ?>
-                            </option>
-                        <?php endforeach; ?>
-
-                        <!-- Single Set Option -->
-                        <option value="<?= htmlspecialchars($setNum . '|' . $setNum) ?>">
-                            Set: <?= htmlspecialchars($setNum) ?>
+                foreach ($groupedResults as $setNum => $carriages): 
+                ?>    
+                    <?php foreach ($carriages as $row): ?>
+                        <option value="<?= htmlspecialchars($row["carNum"] . "|" . $row["setNum"]) ?>">
+                            Carriage: <?= htmlspecialchars($row["carNum"]) ?> - Set: <?= htmlspecialchars($row["setNum"]) ?>
                         </option>
                     <?php endforeach; ?>
-                </select>
 
-                <label for="note">Note:</label>
-                <input type="text" id="note" name="note">
-
-                <!-- date !-->
-                <label for="date">Date:</label>
-                <input id="date" type="datetime-local" id="date" name="date" required onclick="newSubID()"">
-
-
-                <button type="submit" name="subID" value="" id="subID">Submit</button>
-            </form>
-            <!--- Form End !-->
+                    <option value="<?= htmlspecialchars($setNum . '|' . $setNum) ?>">
+                        Set: <?= htmlspecialchars($setNum) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+        <div id="depContainer">
+            <label for="dep">Origin:</label>
+            <select name="dep" id="dep" required>
+                <?php
+                    if (!empty($stationResults)) {
+                        // Group by letter
+                        $groupedStations = [];
+                        foreach ($stationResults as $row) {
+                            $firstLetter = strtoupper(substr($row["name"], 0, 1));
+                            $groupedStations[$firstLetter][] = $row;
+                        }
+                        foreach ($groupedStations as $letter => $stations) {
+                            echo '<optgroup label="' . htmlspecialchars($letter) . '">';
+                            foreach ($stations as $station) {
+                                echo '<option value="' . htmlspecialchars($station["name"]) . '">' . htmlspecialchars($station["name"]) . '</option>';
+                            }
+                            echo '</optgroup>';
+                        }
+                    }
+                ?>
+            </select>
+        </div>
+        <div id="desContainer">
+            <label for="des">Destination:</label>
+            <select name="des" id="des" required>
+                <?php
+                    if (!empty($stationResults)) {
+                        // Group by letter
+                        $groupedStations = [];
+                        foreach ($stationResults as $row) {
+                            $firstLetter = strtoupper(substr($row["name"], 0, 1));
+                            $groupedStations[$firstLetter][] = $row;
+                        }
+                        foreach ($groupedStations as $letter => $stations) {
+                            echo '<optgroup label="' . htmlspecialchars($letter) . '">';
+                            foreach ($stations as $station) {
+                                echo '<option value="' . htmlspecialchars($station["name"]) . '">' . htmlspecialchars($station["name"]) . '</option>';
+                            }
+                            echo '</optgroup>';
+                        }
+                    }
+                ?>
+            </select>
+        </div>
+        <label for="date">Date:</label>
+        <input id="date" type="datetime-local" name="date" required onclick="newSubID()">
+        <button type="submit" name="subID" value="" id="subID">Submit</button>
+    </form>
 
     <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($searchResults)): ?>
         <h2 style="color: white;">Search Results:</h2>
@@ -148,22 +212,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
             <tr>
                 <th>Set Number</th>
                 <th>Car Number</th>
-                <th>Note</th>
+                <th>Departure</th>
+                <th>Destination</th>
                 <th>Date & Time</th>
+                <!--
+                <th>Edit</th>
+                -->
             </tr>
             <?php foreach ($allEntries as $row): ?>
                 <tr>
                     <td><?= htmlspecialchars($row["setNum"]) ?></td>
                     <td><?= htmlspecialchars($row["carNum"]) ?></td>
-                    <td><?= htmlspecialchars($row["note"]) ?></td>
+                    <td><?= htmlspecialchars($row["dep"]) ?></td>
+                    <td><?= htmlspecialchars($row["des"]) ?></td>
                     <td><?= htmlspecialchars($row["date"]) ?></td>
+                    <!--
+                    <td><?= htmlspecialchars($row["subID"]) ?></td>
+                    -->
                 </tr>
             <?php endforeach; ?>
         </table>
     <?php elseif (empty($searchResults) && empty($allEntries)): ?>
         <p id="noResultError">No results found.</p>
     <?php endif; ?>
-
 
     <script>
         //Hide error on load
@@ -183,6 +254,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
             const submitValue = document.getElementById('subID');
             submitValue.value = genID;
         };
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.ajaxForm').forEach(function(form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault(); // Stop page refresh, stupid clearing data
+                var targetSelector = form.getAttribute('data-target');
+                var formData = new FormData(form);
+                fetch('index.php', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(function(response) { return response.text(); })
+                .then(function(html) {
+                    var tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = html;
+                    var newContent = tempDiv.querySelector(targetSelector);
+                    if(newContent) {
+                        document.querySelector(targetSelector).innerHTML = newContent.innerHTML;
+                    }
+                })
+                .catch(function(error) { console.error('Error:', error); });
+            });
+        });
+    });
     </script>
 </body>
 </html>
