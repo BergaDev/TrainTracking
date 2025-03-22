@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
         <button type="submit" name="show_all" id="show_all">Show All Entries</button>
     </form>
 
-    <form action="results.php" method="POST" id="combinedForm">
+    <form action="results.php" method="POST" id="combinedForm" style="display:none;">
         <div id="setContainer">
             <label for="selection">Select the set and carriage:</label>
             <select name="selectedCarSet" id="selectedCarSet" required>
@@ -274,6 +274,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
                     if(newContent) {
                         document.querySelector(targetSelector).innerHTML = newContent.innerHTML;
                     }
+                const combinedForm = document.getElementById("combinedForm");
+                if (combinedForm) {
+                    combinedForm.style.display = "block";
+                }
                 })
                 .catch(function(error) { console.error('Error:', error); });
             });
