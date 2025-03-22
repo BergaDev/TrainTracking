@@ -103,6 +103,10 @@ a:visited {
     text-decoration: none;
 }
 
+.searchArea {
+    color: yellow;
+}
+
 #goodResult {
     font-family: 'spaceMonoReg';
 }

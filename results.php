@@ -20,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectedCarSet'])) {
     $carNumSave = htmlspecialchars($carNum);
     $setNumSave = htmlspecialchars($setNum);
     $date = $conn->real_escape_string($_POST['date']);
-    $note = htmlspecialchars($_POST['note']);
     $dep = htmlspecialchars($_POST['dep']);
     $des = htmlspecialchars($_POST['des']);
     $subID = htmlspecialchars($_POST['subID']);
@@ -118,7 +117,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectedCarSet'])) {
                 <th>Depature</th>
                 <th>Destination</th>
                 <th>Date</th>
+                <!--
                 <th>Edit</th>
+                -->
             </tr>
             <?php foreach ($allResults as $row): ?>
                 <tr>
@@ -127,7 +128,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectedCarSet'])) {
                     <td><?= htmlspecialchars($row["dep"]) ?></td>
                     <td><?= htmlspecialchars($row["des"]) ?></td>
                     <td><?= htmlspecialchars($row["date"]) ?></td>
-                    <td><?= htmlspecialchars($row["subID"]) ?></td>
+                    <!-- 
+                    <td><?= htmlspecialchars($row["subID"]) ?></td> 
+                    -->
                 </tr>
             <?php endforeach; ?>
         </table>
