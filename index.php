@@ -97,19 +97,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
     <h1 style="color: yellow;">Train Track(ing)</h1>
 
     <form action="index.php" method="POST" class="ajaxForm" data-target="#setContainer">
-        <label for="query" class="searchArea">Enter Set or carriage:</label>
+        <label for="query" class="searchArea">Set or carriage Num:</label>
         <input type="text" id="query" name="setCar" required placeholder="A73">
         <button type="submit" id="SearchNum">Search</button>
     </form>
 
     <form action="index.php" method="POST" class="ajaxForm" data-target="#depContainer">
-        <label for="query" class="searchArea">Enter Departure Station:</label>
+        <label for="query" class="searchArea">Departure Station:</label>
         <input type="text" id="query" name="station" required placeholder="Thirroul">
         <button type="submit" id="SearchNum">Search</button>
     </form>
 
     <form action="index.php" method="POST" class="ajaxForm" data-target="#desContainer">
-        <label for="query" class="searchArea">Enter Destination Station:</label>
+        <label for="query" class="searchArea">Destination Station:</label>
         <input type="text" id="query" name="station" required placeholder="Central">
         <button type="submit" id="SearchNum">Search</button>
     </form>
