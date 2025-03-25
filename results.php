@@ -71,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectedCarSet'])) {
                  !-->
             </ul>
     </div>
-    <h1 id='projName' style="color: yellow;">Train Track(ing)</h1>
+    <h1 id='projName' style="color: yellow;"><a href="index.php"> Train Track(ing) </a></h1>
     <?php if (!empty($allResults)): ?>
 
     <?php
