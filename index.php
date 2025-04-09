@@ -282,7 +282,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
                     <td id="sortUsing" onclick="sortRowAction('<?= htmlspecialchars($row["carNum"]) ?>')"><?= htmlspecialchars($row["carNum"]) ?></td>
                     <td id="sortUsing" onclick="sortRowAction('<?= htmlspecialchars($row["dep"]) ?>')"><?= htmlspecialchars($row["dep"]) ?></td>
                     <td id="sortUsing" onclick="sortRowAction('<?= htmlspecialchars($row["des"]) ?>')"><?= htmlspecialchars($row["des"]) ?></td>
-                    <td id="sortUsing" onclick="sortRowAction('<?= htmlspecialchars($row["date"]) ?>')"><?= htmlspecialchars($row["date"]) ?></td>
+                    <td id="sortUsing" onclick="sortRowAction('<?= htmlspecialchars($row["date"]) ?>')">
+                        <?php 
+                            $date = new DateTime($row["date"]);
+                            echo $date->format("d/m/y h:iA"); 
+                        ?>
+                    </td>
                     <!--
                     <td><?= htmlspecialchars($row["subID"]) ?></td>
                     -->
