@@ -62,12 +62,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['sortColumnValue'])) {
     $query = $conn->real_escape_string($_POST['sortColumnValue']);
 
     $sql2 = "SELECT * FROM userData 
-         WHERE setNum = '$query' 
-         OR carNum = '$query' 
-         OR dep LIKE '%$query%' 
-         OR des LIKE '%$query%' 
-         OR date = '$query' 
-         ORDER BY `date` DESC";
+             WHERE userID LIKE '707' AND (
+                 setNum = '$query' 
+                 OR carNum = '$query' 
+                 OR dep LIKE '%$query%' 
+                 OR des LIKE '%$query%' 
+                 OR date = '$query'
+             ) 
+             ORDER BY `date` DESC";
     $result = $conn->query($sql2);
 
     $allEntries = [];
