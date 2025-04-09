@@ -57,6 +57,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['station'])) {
 
 $allEntries = null;
 
+//To search DB by row
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['sortColumnValue'])) {
+    $query = $conn->real_escape_string($_POST['sortColumnValue']);
+
+    $sql2 = "SELECT * FROM userData WHERE setNum LIKE '%$query%' OR carNum LIKE '%$query%' OR dep LIKE '%$query%' OR des LIKE '%$query%' OR date LIKE '%$query%' ORDER BY `date` DESC";
+    $result = $conn->query($sql2);
+
+    $allEntries = [];
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $allEntries[] = $row;
+        }
+    }
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
 
     $sql2 = "SELECT * FROM userData WHERE userID LIKE '707' ORDER BY `userData`.`date` DESC";
@@ -80,12 +95,48 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
     <title>Log Entry</title>
     <h1><a href="../index.html" class="homeLink">Matthew Bergamini</a></h1>
     <script>
-        // Need to make this less hacky
-        /*
-        window.onload = function() {
-            document.getElementById('formIntro').submit();
-        };
-        */
+        function sortRowAction(value) {
+            const formData = new FormData();
+            formData.append("sortColumnValue", value);
+
+            fetch("index.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const newDoc = parser.parseFromString(html, "text/html");
+                const newTable = newDoc.querySelector("#filteredResults");
+
+                if (newTable) {
+                    const target = document.getElementById("allEntriesTable");
+                    target.innerHTML = newTable.innerHTML;
+                }
+            })
+            .catch(err => console.error("Search error:", err));
+        }
+
+        function resetAllEntries() {
+            const formData = new FormData();
+            formData.append("show_all", "true");
+
+            fetch("index.php", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.text())
+            .then(html => {
+                const parser = new DOMParser();
+                const newDoc = parser.parseFromString(html, "text/html");
+                const newTable = newDoc.querySelector("#filteredResults");
+
+                if (newTable) {
+                    const target = document.getElementById("allEntriesTable");
+                    target.innerHTML = newTable.innerHTML;
+                }
+            });
+        }
     </script>
 </head>
 <body>
@@ -214,7 +265,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
 
     <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($allEntries)): ?>
         <h2 style="color: yellow; font-family: 'spaceMonoBold'" id="allEntriesText">All Entries:</h2>
-        <table border="1">
+        <div id="filteredResults"><table border="1" id="allEntriesTable">
             <tr>
                 <th>Set Number</th>
                 <th>Car Number</th>
@@ -227,17 +278,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
             </tr>
             <?php foreach ($allEntries as $row): ?>
                 <tr>
-                    <td><?= htmlspecialchars($row["setNum"]) ?></td>
-                    <td><?= htmlspecialchars($row["carNum"]) ?></td>
-                    <td><?= htmlspecialchars($row["dep"]) ?></td>
-                    <td><?= htmlspecialchars($row["des"]) ?></td>
-                    <td><?= htmlspecialchars($row["date"]) ?></td>
+                    <td id="sortUsing" onclick="sortRowAction('<?= htmlspecialchars($row["setNum"]) ?>')"><?= htmlspecialchars($row["setNum"]) ?></td>
+                    <td id="sortUsing" onclick="sortRowAction('<?= htmlspecialchars($row["carNum"]) ?>')"><?= htmlspecialchars($row["carNum"]) ?></td>
+                    <td id="sortUsing" onclick="sortRowAction('<?= htmlspecialchars($row["dep"]) ?>')"><?= htmlspecialchars($row["dep"]) ?></td>
+                    <td id="sortUsing" onclick="sortRowAction('<?= htmlspecialchars($row["des"]) ?>')"><?= htmlspecialchars($row["des"]) ?></td>
+                    <td id="sortUsing" onclick="sortRowAction('<?= htmlspecialchars($row["date"]) ?>')"><?= htmlspecialchars($row["date"]) ?></td>
                     <!--
                     <td><?= htmlspecialchars($row["subID"]) ?></td>
                     -->
                 </tr>
             <?php endforeach; ?>
-        </table>
+        </table></div>
+        <button onclick="resetAllEntries()" style="margin-top: 10px;">Show All Again</button>
     <?php elseif (empty($searchResults) && empty($allEntries)): ?>
         <p id="noResultError">No results found.</p>
     <?php endif; ?>
