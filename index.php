@@ -265,6 +265,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
 
     <?php if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($allEntries)): ?>
         <h2 style="color: yellow; font-family: 'spaceMonoBold'" id="allEntriesText">All Entries:</h2>
+        <button onclick="resetAllEntries()" style="margin-top: 10px;">Show All Again</button>
         <div id="filteredResults"><table border="1" id="allEntriesTable">
             <tr>
                 <th>Set Number</th>
@@ -276,6 +277,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
                 <th>Edit</th>
                 -->
             </tr>
+            
             <?php foreach ($allEntries as $row): ?>
                 <tr>
                     <td id="sortUsing" onclick="sortRowAction('<?= htmlspecialchars($row["setNum"]) ?>')"><?= htmlspecialchars($row["setNum"]) ?></td>
@@ -294,7 +296,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
                 </tr>
             <?php endforeach; ?>
         </table></div>
-        <button onclick="resetAllEntries()" style="margin-top: 10px;">Show All Again</button>
     <?php elseif (empty($searchResults) && empty($allEntries)): ?>
         <p id="noResultError">No results found.</p>
     <?php endif; ?>
