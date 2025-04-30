@@ -92,6 +92,12 @@ td {
     font-family: 'pixer';
 }
 
+@media (max-width: 768px) {
+    input {
+        font-size: 16px;
+    }
+}
+
 a:link {
     color: white;
 }
