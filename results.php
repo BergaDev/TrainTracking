@@ -31,6 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectedCarSet'])) {
     } catch (mysqli_sql_exception $e) {
         if ($e->getCode() === 1062) { 
             echo "<p style='color: red;'>Duplicate Data entry, perhaps site refresh and submission</p>";
+            echo "<script>alert('Duplicate Data entry, perhaps site refresh and submission');</script>";
         } else {
             echo "<p style='color: red;'>Error inserting data: " . $e->getMessage() . "</p>";
         }
