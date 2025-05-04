@@ -32,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectedCarSet'])) {
         if ($e->getCode() === 1062) { 
             echo "<p style='color: red;'>Duplicate Data entry, perhaps site refresh and submission</p>";
             echo "<script>alert('Duplicate Data entry, perhaps site refresh and submission');</script>";
+            echo "<script>window.location.href = 'index.php';</script>";
         } else {
             echo "<p style='color: red;'>Error inserting data: " . $e->getMessage() . "</p>";
         }
