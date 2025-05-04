@@ -107,8 +107,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectedCarSet'])) {
         <?php
         if ($setCount >= 1 && $carCount == 0) {
             echo "<p>You have rode this set: $setCount times</p>";
+            echo "<button onclick=\"window.location.href='index.php'\">Explore Past Results</button>";
         } else if ($setCount >= 1 && $carCount >= 1) {
             echo "<p>You have rode this set: $setCount times and the carriage: $carCount</p>";
+            echo "<button onclick=\"window.location.href='index.php'\">Explore Past Results</button>";
         }
         ?>
 
@@ -116,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && !empty($_POST['selectedCarSet'])) {
             <tr>
                 <th>Carriage Number</th>
                 <th>Set Number</th>
-                <th>Depature</th>
+                <th>Departure</th>
                 <th>Destination</th>
                 <th>Date</th>
                 <!--
