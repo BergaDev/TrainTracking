@@ -284,7 +284,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['show_all'])) {
                     <td id="sortUsing" onclick="sortRowAction('<?= htmlspecialchars($row["carNum"]) ?>')"><?= htmlspecialchars($row["carNum"]) ?></td>
                     <td id="sortUsing" onclick="sortRowAction('<?= htmlspecialchars($row["dep"]) ?>')"><?= htmlspecialchars($row["dep"]) ?></td>
                     <td id="sortUsing" onclick="sortRowAction('<?= htmlspecialchars($row["des"]) ?>')"><?= htmlspecialchars($row["des"]) ?></td>
-                    <td id="sortUsing" onclick="sortRowAction('<?= htmlspecialchars($row["date"]) ?>')">
+                    <td id="sortUsing" onclick="sortRowAction('<?= (new DateTime($row["date"]))->format('Y-m-d') ?>')">
                         <?php 
                             $date = new DateTime($row["date"]);
                             echo $date->format("d/m/y h:iA"); 
