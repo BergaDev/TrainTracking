@@ -9,6 +9,7 @@ export default defineConfig({
   server: {
     port: 3021,
     allowedHosts: ['www.new.bergadev.com', 'localhost'],
+    host: '0.0.0.0',
     proxy: {
       '/api': {
         target: process.env.API_URL,
