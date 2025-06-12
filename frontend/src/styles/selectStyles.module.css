@@ -1,0 +1,33 @@
+.selectRoot {
+  background-color: #ffffff;
+}
+
+.selectRoot .MuiOutlinedInput-notchedOutline {
+  border-color: #1976d2;
+}
+
+.selectRoot:hover .MuiOutlinedInput-notchedOutline {
+  border-color: #1565c0;
+}
+
+.selectRoot.Mui-focused .MuiOutlinedInput-notchedOutline {
+  border-color: #1976d2;
+  border-width: 2px;
+}
+
+.menuPaper {
+  background-color: #ffffff;
+}
+
+.menuItem {
+  &:hover {
+    background-color: #e3f2fd;
+  }
+}
+
+.menuItemSelected {
+  background-color: #bbdefb;
+  &:hover {
+    background-color: #90caf9;
+  }
+} 
