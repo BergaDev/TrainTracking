@@ -23,7 +23,7 @@ import {
   TableHead,
   Table,
 } from '@mui/material';
-import { LineChart } from '@mui/x-charts';
+import { BarChart, LineChart } from '@mui/x-charts';
 import {
   Menu as MenuIcon,
   ChevronLeft as ChevronLeftIcon,
@@ -89,6 +89,8 @@ const pastMonthTrips = await axios.get('/api/userData/tripsStats/pastMonth/707')
 const commonSet = await axios.get('/api/userData/tripsStats/commonSet/707');
 const commonCar = await axios.get('/api/userData/tripsStats/commonCar/707');
 const monthGroup = await axios.get('/api/userData/tripsStats/monthGroup/707');
+
+const monthGroupFlipped = monthGroup.data.reverse();
 
 export default function ViewTrips() {
   const [open, setOpen] = useState(true);
@@ -256,20 +258,58 @@ export default function ViewTrips() {
                   height={100}
                   series={[
                     {
-                      data: monthGroup.data.map((item: any) => item.totalTrips),
+                      data: monthGroupFlipped.map((item: any) => item.trips),
                       area: true,
                     },
                   ]}
                   xAxis={[
                     {
-                      data: monthGroup.data.map((item: any) => new Date(item.month + '-01').toLocaleDateString('en-US', { month: 'short' })),
+                      data: monthGroupFlipped.map((item: any) => new Date(item.month + '-01').toLocaleDateString('en-US', { month: 'short' })),
                       label: 'Month',
                       scaleType: 'point',
                     },
                   ]}
                   yAxis={[
                     {
-                      data: monthGroup.data.map((item: any) => item.trips),
+                      min: 0,
+                      max: Math.max(...monthGroupFlipped.map((item: any) => item.trips)) * 1.1,
+                    },
+                  ]}
+                  margin={{ top: 10, bottom: 20, left: 20, right: 20 }}
+                />
+              </Paper>
+            </Grid>
+
+            <Grid item xs={12} md={4}>
+              <Paper
+                sx={{
+                  p: 2,
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: 140,
+                }}
+              >
+                <Typography component="h2" variant="h6" color="primary" gutterBottom>
+                  Trips Over Time
+                </Typography>
+                <BarChart
+                  height={100}
+                  series={[
+                    {
+                      data: monthGroupFlipped.map((item: any) => item.trips),
+                    },
+                  ]}
+                  xAxis={[
+                    {
+                      data: monthGroupFlipped.map((item: any) => new Date(item.month + '-01').toLocaleDateString('en-US', { month: 'short' })),
+                      label: 'Month',
+                      scaleType: 'band',
+                    },
+                  ]}
+                  yAxis={[
+                    {
+                      min: 0,
+                      max: Math.max(...monthGroupFlipped.map((item: any) => item.trips)) * 1.1,
                     },
                   ]}
                   margin={{ top: 10, bottom: 20, left: 20, right: 20 }}
@@ -283,7 +323,7 @@ export default function ViewTrips() {
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
                   Recent Trips
                 </Typography>
-                <div style={{ height: 400, width: '100%' }}>
+                <div style={{ height: 400, width: '100%', minHeight: 400 }}>
                   <DataGrid
                     rows={allTrips.data.map((trip: any) => ({
                       id: trip.subID,
@@ -308,9 +348,6 @@ export default function ViewTrips() {
                     pageSizeOptions={[15]}
                     checkboxSelection
                     disableRowSelectionOnClick
-                    sortModel={[
-                      { field: 'date', sort: 'desc' },
-                    ]}
                   />
                 </div>
               </Paper>

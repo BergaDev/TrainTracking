@@ -52,7 +52,7 @@ router.get('/', async (req, res) => {
 
 router.get('/allTrips/:userID', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM userData WHERE userID = ?', [req.params.userID]);
+    const [rows] = await pool.query('SELECT * FROM userData WHERE userID = ? ORDER BY `userData`.`date` DESC', [req.params.userID]);
     res.json(rows);
   } catch (error: any) {
     console.error('Error fetching all trips:', {
@@ -76,7 +76,7 @@ router.get('/tripsStats/allTime/:userID', async (req, res) => {
 
 router.get('/tripsStats/pastMonth/:userID', async (req, res) => {
     try {
-      const [rows] = await pool.query('SELECT COUNT(*) as totalTrips FROM userData WHERE userID = ? AND date >= DATE_SUB(CURDATE(), INTERVAL 1 MONTH)', [req.params.userID]);
+      const [rows] = await pool.query('SELECT COUNT(*) as totalTrips FROM userData WHERE userID = ? AND YEAR(date) = YEAR(CURRENT_DATE()) AND MONTH(date) = MONTH(CURRENT_DATE())', [req.params.userID]);
       res.json(rows);
     } catch (error: any) {
       console.error('Error fetching all trips:', {
