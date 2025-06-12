@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import '../styles/globals.css';
+
 import {
   Box,
   Button,
@@ -28,9 +30,11 @@ interface Station {
 
 const NewTrip: React.FC = () => {
   const [setCarQuery, setSetCarQuery] = useState('');
-  const [stationQuery, setStationQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<CarSet[]>([]);
-  const [stationResults, setStationResults] = useState<Station[]>([]);
+  const [originStationQuery, setOriginStationQuery] = useState('');
+  const [destinationStationQuery, setDestinationStationQuery] = useState('');
+  const [carSetResults, setCarSetResults] = useState<CarSet[]>([]);
+  const [originStationResults, setOriginStationResults] = useState<Station[]>([]);
+  const [destinationStationResults, setDestinationStationResults] = useState<Station[]>([]);
   const [selectedCarSet, setSelectedCarSet] = useState('');
   const [departure, setDeparture] = useState('');
   const [destination, setDestination] = useState('');
@@ -39,18 +43,28 @@ const NewTrip: React.FC = () => {
   const handleSetCarSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/search/carset', { query: setCarQuery });
-      setSearchResults(response.data);
+      const response = await axios.get(`/api/trainData/search/train/${setCarQuery}`);
+      setCarSetResults(response.data);
     } catch (error) {
       console.error('Error searching for car sets:', error);
     }
   };
 
-  const handleStationSearch = async (e: React.FormEvent) => {
+  const handleOriginStationSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/search/station', { query: stationQuery });
-      setStationResults(response.data);
+      const response = await axios.get(`/api/stationData/search/station/${originStationQuery}`);
+      setOriginStationResults(response.data);
+    } catch (error) {
+      console.error('Error searching for stations:', error);
+    }
+  };
+
+  const handleDestinationStationSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const response = await axios.get(`/api/stationData/search/station/${destinationStationQuery}`);
+      setDestinationStationResults(response.data);
     } catch (error) {
       console.error('Error searching for stations:', error);
     }
@@ -85,7 +99,16 @@ const NewTrip: React.FC = () => {
     }
   };
 
-  const groupedStations = stationResults.reduce((acc, station) => {
+  const groupedOriginStations = originStationResults.reduce((acc, station) => {
+    const firstLetter = station.name.charAt(0).toUpperCase();
+    if (!acc[firstLetter]) {
+      acc[firstLetter] = [];
+    }
+    acc[firstLetter].push(station);
+    return acc;
+  }, {} as Record<string, Station[]>);
+
+  const groupedDestinationStations = destinationStationResults.reduce((acc, station) => {
     const firstLetter = station.name.charAt(0).toUpperCase();
     if (!acc[firstLetter]) {
       acc[firstLetter] = [];
@@ -95,7 +118,7 @@ const NewTrip: React.FC = () => {
   }, {} as Record<string, Station[]>);
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" id="new-trip-container">
       <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
         <Typography variant="h4" component="h2" gutterBottom align="center">
           New Trip Entry
@@ -130,14 +153,40 @@ const NewTrip: React.FC = () => {
             </Grid>
 
             <Grid item xs={12}>
-              <Box component="form" onSubmit={handleStationSearch} sx={{ mb: 3 }}>
+              <Box component="form" onSubmit={handleOriginStationSearch} sx={{ mb: 3 }}>
                 <Grid container spacing={2} alignItems="center">
                   <Grid item xs={12} sm>
                     <TextField
                       fullWidth
                       label="Station"
-                      value={stationQuery}
-                      onChange={(e) => setStationQuery(e.target.value)}
+                      value={originStationQuery}
+                      onChange={(e) => setOriginStationQuery(e.target.value)}
+                      placeholder="Thirroul"
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm="auto">
+                    <Button
+                      type="submit"
+                      variant="contained"
+                      startIcon={<SearchIcon />}
+                    >
+                      Search
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Box>
+            </Grid>
+
+            <Grid item xs={12}>
+              <Box component="form" onSubmit={handleDestinationStationSearch} sx={{ mb: 3 }}>
+                <Grid container spacing={2} alignItems="center">
+                  <Grid item xs={12} sm>
+                    <TextField
+                      fullWidth
+                      label="Station"
+                      value={destinationStationQuery}
+                      onChange={(e) => setDestinationStationQuery(e.target.value)}
                       placeholder="Thirroul"
                       required
                     />
@@ -167,7 +216,7 @@ const NewTrip: React.FC = () => {
                         onChange={handleSelectChange}
                         label="Select the set and carriage"
                       >
-                        {searchResults.map((result) => (
+                        {carSetResults.map((result) => (
                           <MenuItem
                             key={`${result.carNum}-${result.setNum}`}
                             value={`${result.carNum}|${result.setNum}`}
@@ -188,12 +237,15 @@ const NewTrip: React.FC = () => {
                         onChange={handleSelectChange}
                         label="Origin"
                       >
-                        {Object.entries(groupedStations).map(([letter, stations]) => [
+                        {Object.entries(groupedOriginStations).map(([letter, stations]) => [
                           <MenuItem key={letter} disabled>
                             {letter}
                           </MenuItem>,
                           ...stations.map((station) => (
-                            <MenuItem key={station.name} value={station.name}>
+                            <MenuItem 
+                              key={station.name} 
+                              value={station.name}
+                            >
                               {station.name}
                             </MenuItem>
                           ))
@@ -211,12 +263,15 @@ const NewTrip: React.FC = () => {
                         onChange={handleSelectChange}
                         label="Destination"
                       >
-                        {Object.entries(groupedStations).map(([letter, stations]) => [
+                        {Object.entries(groupedDestinationStations).map(([letter, stations]) => [
                           <MenuItem key={letter} disabled>
                             {letter}
                           </MenuItem>,
                           ...stations.map((station) => (
-                            <MenuItem key={station.name} value={station.name}>
+                            <MenuItem 
+                              key={station.name} 
+                              value={station.name}
+                            >
                               {station.name}
                             </MenuItem>
                           ))
@@ -257,6 +312,7 @@ const NewTrip: React.FC = () => {
           </Grid>
         </Box>
       </Paper>
+      {/* End form container */}
     </Container>
   );
 };
