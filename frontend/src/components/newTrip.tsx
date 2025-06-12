@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/globals.css';
 
@@ -35,16 +35,40 @@ const NewTrip: React.FC = () => {
   const [carSetResults, setCarSetResults] = useState<CarSet[]>([]);
   const [originStationResults, setOriginStationResults] = useState<Station[]>([]);
   const [destinationStationResults, setDestinationStationResults] = useState<Station[]>([]);
-  const [selectedCarSet, setSelectedCarSet] = useState('');
-  const [departure, setDeparture] = useState('');
-  const [destination, setDestination] = useState('');
-  const [date, setDate] = useState('');
+  const [selectedCarSet, setSelectedCarSet] = useState<string>('');
+  const [departure, setDeparture] = useState<string>('');
+  const [destination, setDestination] = useState<string>('');
+  const [date, setDate] = useState<string>('');
+  const [hasSearched, setHasSearched] = useState(false);
+
+  //Need to set select options this way
+  useEffect(() => {
+    if (carSetResults.length > 0) {
+      const firstResult = carSetResults[0];
+      setSelectedCarSet(`${firstResult.carNum}|${firstResult.setNum}`);
+    }
+  }, [carSetResults]);
+
+  useEffect(() => {
+    if (originStationResults.length > 0) {
+      const firstResult = originStationResults[0];
+      setDeparture(firstResult.name);
+    }
+  }, [originStationResults]);
+
+  useEffect(() => {
+    if (destinationStationResults.length > 0) {
+      const firstResult = destinationStationResults[0];
+      setDestination(firstResult.name);
+    }
+  }, [destinationStationResults]);
 
   const handleSetCarSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const response = await axios.get(`/api/trainData/search/train/${setCarQuery}`);
       setCarSetResults(response.data);
+      setHasSearched(true);
     } catch (error) {
       console.error('Error searching for car sets:', error);
     }
@@ -55,6 +79,7 @@ const NewTrip: React.FC = () => {
     try {
       const response = await axios.get(`/api/stationData/search/station/${originStationQuery}`);
       setOriginStationResults(response.data);
+      setHasSearched(true);
     } catch (error) {
       console.error('Error searching for stations:', error);
     }
@@ -65,6 +90,7 @@ const NewTrip: React.FC = () => {
     try {
       const response = await axios.get(`/api/stationData/search/station/${destinationStationQuery}`);
       setDestinationStationResults(response.data);
+      setHasSearched(true);
     } catch (error) {
       console.error('Error searching for stations:', error);
     }
@@ -73,12 +99,27 @@ const NewTrip: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('/api/trips', {
-        carSet: selectedCarSet,
-        departure,
-        destination,
-        date
+      await axios.post('/api/userData/newTrip', {
+        userID: '707',
+        setNum: selectedCarSet.split('|')[1],
+        carNum: selectedCarSet.split('|')[0],
+        date: date,
+        dep: departure,
+        des: destination
       });
+      alert('Trip submitted successfully');
+      setHasSearched(false);
+      setCarSetResults([]);
+      setOriginStationResults([]);
+      setDestinationStationResults([]);
+      setSelectedCarSet('');
+      setDeparture('');
+      setDestination('');
+      setDate('');
+      window.location.reload();
+      {/*
+      //TODO: Add a message and clear the form
+      */}
     } catch (error) {
       console.error('Error submitting trip:', error);
     }
@@ -204,6 +245,7 @@ const NewTrip: React.FC = () => {
               </Box>
             </Grid>
 
+          <Container id="selection-area" sx={{ display: hasSearched ? 'block' : 'none' }}>
             <Grid item xs={12}>
               <Box component="form" onSubmit={handleSubmit}>
                 <Grid container spacing={3}>
@@ -309,6 +351,7 @@ const NewTrip: React.FC = () => {
                 </Grid>
               </Box>
             </Grid>
+            </Container>
           </Grid>
         </Box>
       </Paper>

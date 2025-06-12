@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import statusRoutes from './routes/status';
 import trainDataRoutes, { initializeDatabase as initializeTrainDatabase } from './routes/trainData';
 import stationDataRoutes, { initializeDatabase as initializeStationDatabase } from './routes/stationData';
+import userDataRoutes, { initializeDatabase as initializeUserData } from './routes/userData';
 // Load both .env and .db.env files
 dotenv.config();
 dotenv.config({ path: '.db.env' });
@@ -31,11 +32,12 @@ app.get('/', (req, res) => {
 app.use('/status', statusRoutes);
 app.use('/trainData', trainDataRoutes);
 app.use('/stationData', stationDataRoutes);
-
+app.use('/userData', userDataRoutes);
 // Initialize databases and start server
 Promise.all([
   initializeTrainDatabase(),
-  initializeStationDatabase()
+  initializeStationDatabase(),
+  initializeUserData()
 ])
   .then(() => {
     app.listen(port, () => {
