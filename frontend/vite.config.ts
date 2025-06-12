@@ -9,6 +9,7 @@ export default defineConfig({
   server: {
     port: 3021,
     host: true,
+    allowedHosts: ['*'],
     proxy: {
       '/api': {
         target: process.env.API_URL,
