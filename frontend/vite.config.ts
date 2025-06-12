@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3021,
-    host: '0.0.0.0',
+    allowedHosts: ['www.new.bergadev.com', 'localhost'],
     proxy: {
       '/api': {
         target: process.env.API_URL,
