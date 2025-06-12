@@ -8,6 +8,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3021,
+    host: true,
     proxy: {
       '/api': {
         target: process.env.API_URL,
