@@ -89,6 +89,7 @@ const pastMonthTrips = await axios.get('/api/userData/tripsStats/pastMonth/707')
 const commonSet = await axios.get('/api/userData/tripsStats/commonSet/707');
 const commonCar = await axios.get('/api/userData/tripsStats/commonCar/707');
 const monthGroup = await axios.get('/api/userData/tripsStats/monthGroup/707');
+const oftenStation = await axios.get('/api/userData/tripsStats/oftenStation/707');
 
 const monthGroupFlipped = monthGroup.data.reverse();
 
@@ -252,31 +253,11 @@ export default function ViewTrips() {
                 }}
               >
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
-                  Trips Over Time
+                  Most Common Station
                 </Typography>
-                <LineChart
-                  height={100}
-                  series={[
-                    {
-                      data: monthGroupFlipped.map((item: any) => item.trips),
-                      area: true,
-                    },
-                  ]}
-                  xAxis={[
-                    {
-                      data: monthGroupFlipped.map((item: any) => new Date(item.month + '-01').toLocaleDateString('en-US', { month: 'short' })),
-                      label: 'Month',
-                      scaleType: 'point',
-                    },
-                  ]}
-                  yAxis={[
-                    {
-                      min: 0,
-                      max: Math.max(...monthGroupFlipped.map((item: any) => item.trips)) * 1.1,
-                    },
-                  ]}
-                  margin={{ top: 10, bottom: 20, left: 20, right: 20 }}
-                />
+                <Typography component="p" variant="h4">
+                  {oftenStation.data[0].dep} ({oftenStation.data[0].frequentStations} trips)
+                </Typography>
               </Paper>
             </Grid>
 
@@ -323,7 +304,7 @@ export default function ViewTrips() {
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
                   Recent Trips
                 </Typography>
-                <div style={{ height: 400, width: '100%', minHeight: 400 }}>
+                <div style={{ height: 700, width: '100%', minHeight: 400 }}>
                   <DataGrid
                     rows={allTrips.data.map((trip: any) => ({
                       id: trip.subID,
@@ -346,8 +327,20 @@ export default function ViewTrips() {
                       },
                     }}
                     pageSizeOptions={[15]}
-                    checkboxSelection
+                    checkboxSelection = {false}
                     disableRowSelectionOnClick
+                    sx={{
+                      '& .MuiDataGrid-columnHeader': {
+                        backgroundColor: '#77BFFF',
+                        color: '#000',
+                        fontSize: '0.9rem',
+                      },
+                      '& .MuiDataGrid-cell': {
+                        backgroundColor: '#77BFFF',
+                        color: '#000',
+                        fontSize: '1rem',
+                      },
+                    }}
                   />
                 </div>
               </Paper>

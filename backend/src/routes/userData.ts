@@ -121,7 +121,18 @@ router.get('/tripsStats/pastMonth/:userID', async (req, res) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   });
-  
+
+  router.get('/tripsStats/oftenStation/:userID', async (req, res) => {
+    try {
+      const [rows] = await pool.query('SELECT dep, COUNT(*) as frequentStations FROM userData WHERE userID = ? AND dep != "Bellambi" GROUP BY dep ORDER BY frequentStations DESC LIMIT 1', [req.params.userID]);
+      res.json(rows);
+    } catch (error: any) {
+      console.error('Error fetching all trips:', {
+        message: error.message
+      });
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
 
     /*
 router.get('/search/train/:query', async (req, res) => {
