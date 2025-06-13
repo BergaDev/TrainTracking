@@ -112,7 +112,6 @@ const NewTrip: React.FC<NewTripProps> = ({ setCarTimes, setSetTimes }) => {
         dep: departure,
         des: destination
       });
-      alert('Trip submitted successfully');
       setHasSearched(false);
       setCarSetResults([]);
       setOriginStationResults([]);

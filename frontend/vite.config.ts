@@ -7,7 +7,7 @@ config()
 export default defineConfig({
   plugins: [react()],
   server: {
-    port: 3021,
+    port: parseInt(process.env.FRONTEND_PORT || '3000'),
     allowedHosts: ['www.new.bergadev.com', 'localhost'],
     host: '0.0.0.0',
     proxy: {

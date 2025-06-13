@@ -18,7 +18,7 @@ console.log('Environment variables loaded:', {
 });
 
 const app = express();
-const port = 3020;
+const port = process.env.BACKEND_PORT;
 
 // Middleware
 app.use(cors({
