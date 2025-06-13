@@ -177,8 +177,8 @@ router.post('/newTrip', async (req, res) => {
         const subID = (Math.floor(Math.random() * 1000000));
         const [rows] = await pool.query('INSERT INTO userData (userID, setNum, carNum, date, subID, dep, des) VALUES (?, ?, ?, ?, ?, ?, ?)', [userID, setNum, carNum, date, subID, dep, des]);
 
-        const carTimes = await axios.get(`http://localhost:3020/userData/trainStats/timesCar/${userID}/${carNum}`);
-        const setTimes = await axios.get(`http://localhost:3020/userData/trainStats/timesSet/${userID}/${setNum}`);
+        const carTimes = await axios.get('http://localhost:' + process.env.BACKEND_PORT + '/userData/trainStats/timesCar/' + userID + '/' + carNum);
+        const setTimes = await axios.get('http://localhost:' + process.env.BACKEND_PORT + '/userData/trainStats/timesSet/' + userID + '/' + setNum);
         res.json({
             carTimes: (carTimes.data as any[])[0]?.frequency ?? 0,
             setTimes: (setTimes.data as any[])[0]?.frequency ?? 0
