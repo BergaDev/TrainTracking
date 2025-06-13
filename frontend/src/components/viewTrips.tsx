@@ -94,7 +94,7 @@ const oftenStation = await axios.get('/api/userData/tripsStats/oftenStation/707'
 const monthGroupFlipped = monthGroup.data.reverse();
 
 export default function ViewTrips() {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -171,15 +171,15 @@ export default function ViewTrips() {
       <Main open={open}>
         <DrawerHeader />
         <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-          <Grid container spacing={3}>
+          <Grid container spacing={{ xs: 2, md: 3 }}>
             {/* Cards */}
             <Grid item xs={12} md={4}>
               <Paper
                 sx={{
-                  p: 2,
+                  p: { xs: 1.5, md: 2 },
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 140,
+                  height: { xs: 120, md: 140 },
                 }}
               >
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
@@ -193,10 +193,10 @@ export default function ViewTrips() {
             <Grid item xs={12} md={4}>
               <Paper
                 sx={{
-                  p: 2,
+                  p: { xs: 1.5, md: 2 },
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 140,
+                  height: { xs: 120, md: 140 },
                 }}
               >
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
@@ -210,10 +210,10 @@ export default function ViewTrips() {
             <Grid item xs={12} md={4}>
               <Paper
                 sx={{
-                  p: 2,
+                  p: { xs: 1.5, md: 2 },
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 140,
+                  height: { xs: 120, md: 140 },
                 }}
               >
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
@@ -228,10 +228,10 @@ export default function ViewTrips() {
             <Grid item xs={12} md={4}>
               <Paper
                 sx={{
-                  p: 2,
+                  p: { xs: 1.5, md: 2 },
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 140,
+                  height: { xs: 120, md: 140 },
                 }}
               >
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
@@ -246,10 +246,10 @@ export default function ViewTrips() {
             <Grid item xs={12} md={4}>
               <Paper
                 sx={{
-                  p: 2,
+                  p: { xs: 1.5, md: 2 },
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 140,
+                  height: { xs: 120, md: 140 },
                 }}
               >
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
@@ -264,10 +264,10 @@ export default function ViewTrips() {
             <Grid item xs={12} md={4}>
               <Paper
                 sx={{
-                  p: 2,
+                  p: { xs: 1.5, md: 2 },
                   display: 'flex',
                   flexDirection: 'column',
-                  height: 140,
+                  height: { xs: 120, md: 140 },
                 }}
               >
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
@@ -304,7 +304,7 @@ export default function ViewTrips() {
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
                   Recent Trips
                 </Typography>
-                <div style={{ height: 700, width: '100%', minHeight: 400 }}>
+                <Box sx={{ height: { xs: 500, md: 700 }, width: '100%', minHeight: { xs: 300, md: 400 } }}>
                   <DataGrid
                     rows={allTrips.data.map((trip: any) => ({
                       id: trip.subID,
@@ -342,7 +342,7 @@ export default function ViewTrips() {
                       },
                     }}
                   />
-                </div>
+                </Box>
               </Paper>
             </Grid>
           </Grid>
