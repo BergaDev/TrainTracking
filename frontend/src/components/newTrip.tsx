@@ -28,7 +28,12 @@ interface Station {
   name: string;
 }
 
-const NewTrip: React.FC = () => {
+interface NewTripProps {
+  setCarTimes: (times: number) => void;
+  setSetTimes: (times: number) => void;
+}
+
+const NewTrip: React.FC<NewTripProps> = ({ setCarTimes, setSetTimes }) => {
   const [setCarQuery, setSetCarQuery] = useState('');
   const [originStationQuery, setOriginStationQuery] = useState('');
   const [destinationStationQuery, setDestinationStationQuery] = useState('');
@@ -99,7 +104,7 @@ const NewTrip: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await axios.post('/api/userData/newTrip', {
+      const response = await axios.post('/api/userData/newTrip', {
         userID: '707',
         setNum: selectedCarSet.split('|')[1],
         carNum: selectedCarSet.split('|')[0],
@@ -116,10 +121,14 @@ const NewTrip: React.FC = () => {
       setDeparture('');
       setDestination('');
       setDate('');
-      window.location.reload();
+      setCarTimes(response.data.carTimes);
+      setSetTimes(response.data.setTimes);
       {/*
       //TODO: Add a message and clear the form
       */}
+
+      document.getElementById('new-trip-container')?.setAttribute('style', 'display: none;');
+      document.getElementById('results-container')?.setAttribute('style', 'display: block;');
     } catch (error) {
       console.error('Error submitting trip:', error);
     }

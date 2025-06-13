@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import mysql from 'mysql2/promise';
-
+import axios from 'axios';
 const router = Router();
 
 let pool: mysql.Pool;
@@ -134,6 +134,29 @@ router.get('/tripsStats/pastMonth/:userID', async (req, res) => {
     }
   });
 
+  router.get('/trainStats/timesCar/:userID/:carNum', async (req, res) => {
+    try {
+      const [rows] = await pool.query('SELECT carNum, COUNT(*) as frequency FROM userData WHERE userID = ? AND carNum = ? GROUP BY carNum ORDER BY frequency DESC LIMIT 1', [req.params.userID, req.params.carNum]);
+      res.json(rows);
+    } catch (error: any) {
+      console.error('Error fetching all trips:', {
+        message: error.message
+      });
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
+  router.get('/trainStats/timesSet/:userID/:setNum', async (req, res) => {
+    try {
+      const [rows] = await pool.query('SELECT setNum, COUNT(*) as frequency FROM userData WHERE userID = ? AND setNum = ? GROUP BY setNum ORDER BY frequency DESC LIMIT 1', [req.params.userID, req.params.setNum]);
+      res.json(rows);
+    } catch (error: any) {
+      console.error('Error fetching all trips:', {
+        message: error.message
+      });
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
     /*
 router.get('/search/train/:query', async (req, res) => {
   try {
@@ -153,7 +176,13 @@ router.post('/newTrip', async (req, res) => {
         const { userID, setNum, carNum, date, dep, des } = req.body;
         const subID = (Math.floor(Math.random() * 1000000));
         const [rows] = await pool.query('INSERT INTO userData (userID, setNum, carNum, date, subID, dep, des) VALUES (?, ?, ?, ?, ?, ?, ?)', [userID, setNum, carNum, date, subID, dep, des]);
-        res.json(rows);
+
+        const carTimes = await axios.get(`http://localhost:3020/userData/trainStats/timesCar/${userID}/${carNum}`);
+        const setTimes = await axios.get(`http://localhost:3020/userData/trainStats/timesSet/${userID}/${setNum}`);
+        res.json({
+            carTimes: (carTimes.data as any[])[0]?.frequency ?? 0,
+            setTimes: (setTimes.data as any[])[0]?.frequency ?? 0
+        });
     } catch (error: any) {
         console.error('Error inserting user data:', {
             message: error.message
