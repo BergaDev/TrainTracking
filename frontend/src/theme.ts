@@ -1,24 +1,6 @@
 import { createTheme } from '@mui/material/styles';
 import { GlobalStyles } from '@mui/material';
 
-const globalStyles = {
-  '@font-face': [
-    {
-      fontFamily: 'Dotto',
-      src: `url('/fonts/Doto-VariableFont_ROND,wght.ttf') format('truetype')`,
-      fontWeight: 400,
-      fontStyle: 'normal',
-    },
-    {
-      fontFamily: 'Bobaland',
-      src: `url('/fonts/Bobaland-OVXB3.otf') format('opentype')`,
-      fontWeight: 400,
-      fontStyle: 'normal',
-    },
-    {}
-  ]
-};
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -41,8 +23,7 @@ const theme = createTheme({
       styleOverrides: {
         body: {
           backgroundColor: '#2D9DFF',
-        },
-        ...globalStyles
+        }
       },
     },
     MuiOutlinedInput: {
@@ -97,27 +78,44 @@ const theme = createTheme({
         },
       },
     },
-    MuiDataGrid: {
-      styleOverrides: {
-        container: {
-          backgroundColor: '#77BFFF',
-        },
-      },
-    },
+
   },
   typography: {
     fontFamily: '"Dotto", "Helvetica", "Arial", sans-serif',
     h1: {
-      fontFamily: '"Dotto"',
+      fontFamily: '"Dotto", "Helvetica", "Arial", sans-serif',
+      fontWeight: 900,
     },
     h2: {
-      fontFamily: '"Bobaland"',
+      fontFamily: '"Bobaland", "Helvetica", "Arial", sans-serif',
     },
     h3: {
-      fontFamily: '"Dotto"',
+      fontFamily: '"Dotto", "Helvetica", "Arial", sans-serif',
+      fontWeight: 700,
     },
     h4: {
-      fontFamily: '"Dotto"',
+      fontFamily: '"Dotto", "Helvetica", "Arial", sans-serif',
+      fontWeight: 600,
+    },
+    h5: {
+      fontFamily: '"Dotto", "Helvetica", "Arial", sans-serif',
+      fontWeight: 500,
+    },
+    h6: {
+      fontFamily: '"Dotto", "Helvetica", "Arial", sans-serif',
+      fontWeight: 900,
+    },
+    body1: {
+      fontFamily: '"Dotto", "Helvetica", "Arial", sans-serif',
+      fontWeight: 400,
+    },
+    body2: {
+      fontFamily: '"Dotto", "Helvetica", "Arial", sans-serif',
+      fontWeight: 300,
+    },
+    button: {
+      fontFamily: '"Dotto", "Helvetica", "Arial", sans-serif',
+      fontWeight: 500,
     },
   },
 });

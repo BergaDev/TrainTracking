@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { styled } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Drawer,
@@ -95,6 +96,7 @@ const monthGroupFlipped = monthGroup.data.reverse();
 
 export default function ViewTrips() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -104,8 +106,13 @@ export default function ViewTrips() {
     setOpen(false);
   };
 
+  const handleNavigation = (path: string) => {
+    navigate(path);
+    setOpen(false);
+  };
+
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex', backgroundColor: '#2D9DFF', minHeight: '100vh' }}>
       <AppBarStyled position="fixed" open={open}>
         <Toolbar>
           <IconButton
@@ -143,7 +150,7 @@ export default function ViewTrips() {
         <Divider />
         <List>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => handleNavigation('/')}>
               <ListItemIcon>
                 <DashboardIcon />
               </ListItemIcon>
@@ -151,7 +158,7 @@ export default function ViewTrips() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => handleNavigation('/train-search')}>
               <ListItemIcon>
                 <TrainIcon />
               </ListItemIcon>
@@ -159,7 +166,7 @@ export default function ViewTrips() {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => handleNavigation('/settings')}>
               <ListItemIcon>
                 <SettingsIcon />
               </ListItemIcon>
@@ -304,8 +311,9 @@ export default function ViewTrips() {
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
                   Recent Trips
                 </Typography>
-                <Box sx={{ height: { xs: 500, md: 700 }, width: '100%', minHeight: { xs: 300, md: 400 } }}>
+                <Box sx={{ width: '100%', overflowX: 'auto' }}>
                   <DataGrid
+                    autoHeight
                     rows={allTrips.data.map((trip: any) => ({
                       id: trip.subID,
                       date: new Date(trip.date).toLocaleString(),
@@ -315,11 +323,11 @@ export default function ViewTrips() {
                       destination: trip.des,
                     }))}
                     columns={[
-                      { field: 'date', headerName: 'Date', width: 200},
-                      { field: 'setNum', headerName: 'Set', width: 130 },
-                      { field: 'carNum', headerName: 'Car', width: 130 },
-                      { field: 'origin', headerName: 'Origin', width: 130 },
-                      { field: 'destination', headerName: 'Destination', width: 130 },
+                      { field: 'date', headerName: 'Date', minWidth: 150, flex: 1 },
+                      { field: 'setNum', headerName: 'Set', minWidth: 80, flex: 1 },
+                      { field: 'carNum', headerName: 'Car', minWidth: 80, flex: 1 },
+                      { field: 'origin', headerName: 'Origin', minWidth: 120, flex: 1 },
+                      { field: 'destination', headerName: 'Destination', minWidth: 120, flex: 1 },
                     ]}
                     initialState={{
                       pagination: {
@@ -334,11 +342,13 @@ export default function ViewTrips() {
                         backgroundColor: '#77BFFF',
                         color: '#000',
                         fontSize: '0.9rem',
+                        fontWeight: 700,
                       },
                       '& .MuiDataGrid-cell': {
                         backgroundColor: '#77BFFF',
                         color: '#000',
                         fontSize: '1rem',
+                        fontWeight: 700,
                       },
                     }}
                   />
