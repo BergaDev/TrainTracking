@@ -20,7 +20,7 @@ const Options: React.FC = () => {
 
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
         <Typography variant="h1" component="h1">
-          Train Tracking
+          Train Track(ing)
         </Typography>
       </Box>
 

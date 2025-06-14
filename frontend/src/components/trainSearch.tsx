@@ -281,40 +281,62 @@ const TrainSearch: React.FC = () => {
 
                 {hasSearched && (
                   <Grid item xs={12}>
-                    <FormControl fullWidth required>
-                      <Box sx={{ backgroundColor: '#77BFFF', borderRadius: 2 }}>
-                        <DataGrid
-                          rows={carSetResults.map((trip: any, index: number) => ({
-                            id: index,
-                            setNum: trip.setNum,
-                            carNum: trip.carNum,
-                            carType: carTypeCheck(trip.carNum, trip.typeName),
-                          }))}
-                          columns={[
-                            { field: 'carNum', headerName: 'Carriage', width: 130 },
-                            { field: 'setNum', headerName: 'Set', width: 130 },
-                            { field: 'carType', headerName: 'Car Type', width: 200 },
-                          ]}
-                          initialState={{
-                            pagination: { paginationModel: { pageSize: 15 } },
-                          }}
-                          pageSizeOptions={[10]}
-                          checkboxSelection={false}
-                          disableRowSelectionOnClick
-                          sx={{
-                            '& .MuiDataGrid-columnHeader': {
-                              backgroundColor: '#45A8FF',
-                              color: '#000',
-                              fontSize: '0.9rem',
-                            },
-                            '& .MuiDataGrid-cell': {
-                              backgroundColor: '#77BFFF',
-                            },
-                          }}
-                        />
-                      </Box>
-                    </FormControl>
-                  </Grid>
+                  <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                    <Typography component="h2" variant="h6" color="primary" gutterBottom>
+                      Recent Trips
+                    </Typography>
+                    <Box sx={{ width: '100%', overflowX: 'auto' }}>
+                      <DataGrid
+                        autoHeight
+                        rows={carSetResults.map((carSet: CarSet, index: number) => ({
+                          id: index,
+                          carNum: carSet.carNum,
+                          setNum: carSet.setNum,
+                          type: carTypeCheck(carSet.carNum, carSet.typeName),
+                        }))}
+                        columns={[
+                          { field: 'carNum', headerName: 'Car', minWidth: 80, flex: 1 },
+                          { field: 'setNum', headerName: 'Set', minWidth: 80, flex: 1 },
+                          { field: 'type', headerName: 'Type', minWidth: 120, flex: 1 },
+                        ]}
+                        initialState={{
+                          pagination: {
+                            paginationModel: { pageSize: 15 },
+                          },
+                        }}
+                        pageSizeOptions={[15]}
+                        checkboxSelection = {false}
+                        disableRowSelectionOnClick
+                        sx={{
+                          '& .MuiDataGrid-columnHeaders': {
+                            backgroundColor: '#FFFF00',
+                          },
+                          '& .MuiDataGrid-columnHeader': {
+                            backgroundColor: '#FFFF00',
+                            color: '#000',
+                            fontSize: '0.9rem',
+                            fontWeight: '900',
+                          },
+                          '& .MuiDataGrid-columnHeaderTitle': {
+                            fontWeight: '900 !important',
+                          },
+                          '& .MuiDataGrid-cell': {
+                            backgroundColor: '#77BFFF',
+                            color: '#000',
+                            fontSize: '1rem',
+                            fontWeight: 700,
+                          },
+                          '& .MuiToolbar-root': {
+                            backgroundColor: '#FFFF00',
+                            color: '#000',
+                            fontSize: '0.9rem',
+                            fontWeight: 700,
+                          },
+                        }}
+                      />
+                    </Box>
+                  </Paper>
+                </Grid>
                 )}
               </Grid>
             </Box>

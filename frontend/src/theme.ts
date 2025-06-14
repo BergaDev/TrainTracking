@@ -29,7 +29,8 @@ const theme = createTheme({
     MuiOutlinedInput: {
       styleOverrides: {
         root: {
-          backgroundColor: '#fff',
+          fontWeight: 900,
+          backgroundColor: '#FFFF00',
           '& .MuiOutlinedInput-notchedOutline': {
             borderColor: '#1976d2',
           },
@@ -40,6 +41,14 @@ const theme = createTheme({
             borderColor: '#1976d2',
             borderWidth: 2,
           },
+        },
+      },
+    },
+    MuiFormLabel: {
+      styleOverrides: {
+        root: {
+          fontWeight: 900,
+          color: '#000',
         },
       },
     },
@@ -78,7 +87,6 @@ const theme = createTheme({
         },
       },
     },
-
   },
   typography: {
     fontFamily: '"Dotto", "Helvetica", "Arial", sans-serif',

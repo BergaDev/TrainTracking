@@ -280,11 +280,14 @@ export default function ViewTrips() {
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
                   Trips Over Time
                 </Typography>
-                <BarChart
+                <LineChart
                   height={100}
                   series={[
                     {
                       data: monthGroupFlipped.map((item: any) => item.trips),
+                      area: true,
+                      showMark: false,
+                      color: '#FFFF00'
                     },
                   ]}
                   xAxis={[
@@ -292,15 +295,30 @@ export default function ViewTrips() {
                       data: monthGroupFlipped.map((item: any) => new Date(item.month + '-01').toLocaleDateString('en-US', { month: 'short' })),
                       label: 'Month',
                       scaleType: 'band',
+                      tickLabelStyle: {
+                        fill: '#000000',
+                        fontSize: 12,
+                        fontWeight: 600
+                      }
                     },
                   ]}
                   yAxis={[
                     {
                       min: 0,
                       max: Math.max(...monthGroupFlipped.map((item: any) => item.trips)) * 1.1,
+                      tickLabelStyle: {
+                        fill: '#000000',
+                        fontSize: 12,
+                        fontWeight: 600
+                      }
                     },
                   ]}
                   margin={{ top: 10, bottom: 20, left: 20, right: 20 }}
+                  sx={{
+                    '.MuiLineElement-root': {
+                      strokeWidth: 2
+                    }
+                  }}
                 />
               </Paper>
             </Grid>
@@ -339,17 +357,26 @@ export default function ViewTrips() {
                     disableRowSelectionOnClick
                     sx={{
                       '& .MuiDataGrid-columnHeader': {
-                        backgroundColor: '#77BFFF',
+                        backgroundColor: '#FFFF00',
                         color: '#000',
                         fontSize: '0.9rem',
                         fontWeight: 700,
                       },
+                      '& .MuiDataGrid-columnHeaderTitle': {
+                            fontWeight: '900 !important',
+                          },
                       '& .MuiDataGrid-cell': {
                         backgroundColor: '#77BFFF',
                         color: '#000',
                         fontSize: '1rem',
                         fontWeight: 700,
                       },
+                      '& .MuiToolbar-root': {
+                            backgroundColor: '#FFFF00',
+                            color: '#000',
+                            fontSize: '0.9rem',
+                            fontWeight: 700,
+                          },
                     }}
                   />
                 </Box>
