@@ -292,11 +292,13 @@ const TrainSearch: React.FC = () => {
                           id: index,
                           carNum: carSet.carNum,
                           setNum: carSet.setNum,
+                          typeName: carSet.typeName,
                           type: carTypeCheck(carSet.carNum, carSet.typeName),
                         }))}
                         columns={[
-                          { field: 'carNum', headerName: 'Car', minWidth: 80, flex: 1 },
-                          { field: 'setNum', headerName: 'Set', minWidth: 80, flex: 1 },
+                          { field: 'carNum', headerName: 'Car', minWidth: 50, flex: 1 },
+                          { field: 'setNum', headerName: 'Set', minWidth: 50, flex: 1 },
+                          { field: 'typeName', headerName: 'Type Name', minWidth: 120, flex: 1 },
                           { field: 'type', headerName: 'Type', minWidth: 120, flex: 1 },
                         ]}
                         initialState={{

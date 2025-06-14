@@ -344,7 +344,7 @@ export default function ViewTrips() {
                       { field: 'date', headerName: 'Date', minWidth: 150, flex: 1 },
                       { field: 'setNum', headerName: 'Set', minWidth: 80, flex: 1 },
                       { field: 'carNum', headerName: 'Car', minWidth: 80, flex: 1 },
-                      { field: 'origin', headerName: 'Origin', minWidth: 120, flex: 1 },
+                      { field: 'origin', headerName: 'Departure', minWidth: 120, flex: 1 },
                       { field: 'destination', headerName: 'Destination', minWidth: 120, flex: 1 },
                     ]}
                     initialState={{
