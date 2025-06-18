@@ -52,7 +52,7 @@ router.get('/', async (req, res) => {
 
 router.get('/search/train/:query', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT * FROM car_sets WHERE SetNum = ? OR CarNum = ?', [req.params.query, req.params.query]);
+    const [rows] = await pool.query('SELECT * FROM car_sets WHERE SetNum LIKE ? OR CarNum LIKE ?', [`%${req.params.query}%`, `%${req.params.query}%`]);
     res.json(rows);
   } catch (error: any) {
     console.error('Error fetching car sets:', {

@@ -11,16 +11,18 @@ const Options: React.FC = () => {
   const [setTimes, setSetTimes] = useState(0);
 
   return (
-    <Container maxWidth="md">
+    <Container maxWidth="md" sx={{ backgroundColor: '#2D9DFF', minHeight: '100vh', justifyContent: 'center', alignItems: 'center'}}>
       <Box sx={{ display: 'flex', justifyContent: 'flex-start', mt: 4, ml: 2, position: 'absolute', top: 0, left: 0}}>
         <Typography variant="h6" component="h6">
           <a href="https://www.bergamini.au/" style={{ textDecoration: 'none', color: '#FFFF00', fontWeight: 900, fontSize: '2rem'}}>Matthew Bergamini</a>
         </Typography>
       </Box>
+      <br />
+      <br />
 
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
         <Typography variant="h1" component="h1">
-          Train Track(ing)
+          Train Track<Typography variant="caption" component="span" sx={{ fontSize: '1.5rem', verticalAlign: 'top', fontWeight: 900 }}>(ing)</Typography>
         </Typography>
       </Box>
 

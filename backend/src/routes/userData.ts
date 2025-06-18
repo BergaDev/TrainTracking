@@ -124,7 +124,7 @@ router.get('/tripsStats/pastMonth/:userID', async (req, res) => {
 
   router.get('/tripsStats/oftenStation/:userID', async (req, res) => {
     try {
-      const [rows] = await pool.query('SELECT dep, COUNT(*) as frequentStations FROM userData WHERE userID = ? AND dep != "Bellambi" GROUP BY dep ORDER BY frequentStations DESC LIMIT 1', [req.params.userID]);
+      const [rows] = await pool.query('SELECT des, COUNT(*) as frequentStations FROM userData WHERE userID = ? AND des != "Bellambi" GROUP BY des ORDER BY frequentStations DESC LIMIT 10', [req.params.userID]);
       res.json(rows);
     } catch (error: any) {
       console.error('Error fetching all trips:', {
@@ -136,7 +136,8 @@ router.get('/tripsStats/pastMonth/:userID', async (req, res) => {
 
   router.get('/trainStats/timesCar/:userID/:carNum', async (req, res) => {
     try {
-      const [rows] = await pool.query('SELECT carNum, COUNT(*) as frequency FROM userData WHERE userID = ? AND carNum = ? GROUP BY carNum ORDER BY frequency DESC LIMIT 1', [req.params.userID, req.params.carNum]);
+      const [rows] = await pool.query('SELECT carNum, COUNT(*) as frequency FROM userData WHERE userID = ? AND carNum = ? GROUP BY carNum ORDER BY frequency DESC LIMIT 5', [req.params.userID, req.params.carNum]);
+      console.log('Frequency of car: ', rows);
       res.json(rows);
     } catch (error: any) {
       console.error('Error fetching all trips:', {
@@ -148,7 +149,8 @@ router.get('/tripsStats/pastMonth/:userID', async (req, res) => {
 
   router.get('/trainStats/timesSet/:userID/:setNum', async (req, res) => {
     try {
-      const [rows] = await pool.query('SELECT setNum, COUNT(*) as frequency FROM userData WHERE userID = ? AND setNum = ? GROUP BY setNum ORDER BY frequency DESC LIMIT 1', [req.params.userID, req.params.setNum]);
+      const [rows] = await pool.query('SELECT setNum, COUNT(*) as frequency FROM userData WHERE userID = ? AND setNum = ? GROUP BY setNum ORDER BY frequency DESC LIMIT 5', [req.params.userID, req.params.setNum]);
+      console.log('Frequency of set: ', rows);
       res.json(rows);
     } catch (error: any) {
       console.error('Error fetching all trips:', {

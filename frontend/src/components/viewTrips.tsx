@@ -23,6 +23,13 @@ import {
   TableRow,
   TableHead,
   Table,
+  Modal,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
+  TextField,
 } from '@mui/material';
 import { BarChart, LineChart } from '@mui/x-charts';
 import {
@@ -96,7 +103,10 @@ const monthGroupFlipped = monthGroup.data.reverse();
 
 export default function ViewTrips() {
   const [open, setOpen] = useState(false);
+  const [stationModalOpen, setStationModalOpen] = useState(false);
+  const [carModalOpen, setCarModalOpen] = useState(false);
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -111,6 +121,10 @@ export default function ViewTrips() {
     setOpen(false);
   };
 
+  const handleOpenStationModal = () => setStationModalOpen(true);
+  const handleCloseStationModal = () => setStationModalOpen(false);
+  const handleOpenCarModal = () => setCarModalOpen(true);
+  const handleCloseCarModal = () => setCarModalOpen(false);
   return (
     <Box sx={{ display: 'flex', backgroundColor: '#2D9DFF', minHeight: '100vh' }}>
       <AppBarStyled position="fixed" open={open}>
@@ -234,6 +248,7 @@ export default function ViewTrips() {
 
             <Grid item xs={12} md={4}>
               <Paper
+                onClick={handleOpenCarModal}
                 sx={{
                   p: { xs: 1.5, md: 2 },
                   display: 'flex',
@@ -250,20 +265,22 @@ export default function ViewTrips() {
               </Paper>
             </Grid>
 
-            <Grid item xs={12} md={4}>
+            <Grid item xs={12} md={4} >
               <Paper
+                onClick={handleOpenStationModal}
                 sx={{
                   p: { xs: 1.5, md: 2 },
                   display: 'flex',
                   flexDirection: 'column',
                   height: { xs: 120, md: 140 },
+                  cursor: 'pointer',
                 }}
               >
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
                   Most Common Station
                 </Typography>
                 <Typography component="p" variant="h4">
-                  {oftenStation.data[0].dep} ({oftenStation.data[0].frequentStations} trips)
+                  {oftenStation.data[0].des} ({oftenStation.data[0].frequentStations} trips)
                 </Typography>
               </Paper>
             </Grid>
@@ -329,17 +346,36 @@ export default function ViewTrips() {
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
                   Recent Trips
                 </Typography>
+                <TextField
+                  label="Search Trips"
+                  variant="outlined"
+                  size="small"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  sx={{ mb: 2, maxWidth: 300 }}
+                />
                 <Box sx={{ width: '100%', overflowX: 'auto' }}>
                   <DataGrid
                     autoHeight
-                    rows={allTrips.data.map((trip: any) => ({
-                      id: trip.subID,
-                      date: new Date(trip.date).toLocaleString(),
-                      setNum: trip.setNum,
-                      carNum: trip.carNum,
-                      origin: trip.dep,
-                      destination: trip.des,
-                    }))}
+                    rows={allTrips.data
+                      .map((trip: any) => ({
+                        id: trip.subID,
+                        date: new Date(trip.date).toLocaleString(),
+                        setNum: trip.setNum,
+                        carNum: trip.carNum,
+                        origin: trip.dep,
+                        destination: trip.des,
+                      }))
+                      .filter((row: any) => {
+                        const query = searchQuery.toLowerCase();
+                        return (
+                          row.date.toLowerCase().includes(query) ||
+                          String(row.setNum).toLowerCase().includes(query) ||
+                          String(row.carNum).toLowerCase().includes(query) ||
+                          row.origin.toLowerCase().includes(query) ||
+                          row.destination.toLowerCase().includes(query)
+                        );
+                      })}
                     columns={[
                       { field: 'date', headerName: 'Date', minWidth: 150, flex: 1 },
                       { field: 'setNum', headerName: 'Set', minWidth: 80, flex: 1 },
@@ -384,6 +420,100 @@ export default function ViewTrips() {
             </Grid>
           </Grid>
         </Container>
+        {/* Modal for Most Frequent Stations */}
+        <Dialog open={stationModalOpen} onClose={handleCloseStationModal} maxWidth="md" fullWidth>
+          <DialogTitle>Most Common Stations</DialogTitle>
+          <DialogContent>
+            <Box sx={{ height: 400, width: '100%' }}>
+              <DataGrid
+                rows={oftenStation.data.map((station: any, idx: number) => ({
+                  id: idx,
+                  station: station.des,
+                  count: station.frequentStations,
+                }))}
+                columns={[
+                  { field: 'station', headerName: 'Station', flex: 1 },
+                  { field: 'count', headerName: 'Trips', flex: 1 },
+                ]}
+                pageSizeOptions={[5, 10, 20]}
+                autoHeight
+                sx={{
+                  '& .MuiDataGrid-columnHeader': {
+                    backgroundColor: '#FFFF00',
+                    color: '#000',
+                    fontSize: '0.9rem',
+                    fontWeight: 700,
+                  },
+                  '& .MuiDataGrid-columnHeaderTitle': {
+                        fontWeight: '900 !important',
+                      },
+                  '& .MuiDataGrid-cell': {
+                    backgroundColor: '#77BFFF',
+                    color: '#000',
+                    fontSize: '1rem',
+                    fontWeight: 700,
+                  },
+                  '& .MuiToolbar-root': {
+                        backgroundColor: '#FFFF00',
+                        color: '#000',
+                        fontSize: '0.9rem',
+                        fontWeight: 700,
+                      },
+                }}
+              />
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseStationModal}>Close</Button>
+          </DialogActions>
+        </Dialog>
+          {/* Modal for Most Frequent Cars */}
+          <Dialog open={carModalOpen} onClose={handleCloseCarModal} maxWidth="md" fullWidth>
+          <DialogTitle>Most Common Cars</DialogTitle>
+          <DialogContent>
+            <Box sx={{ height: 400, width: '100%' }}>
+              <DataGrid
+                rows={commonCar.data.map((car: any, idx: number) => ({
+                  id: idx,
+                  car: car.carNum,
+                  count: car.frequentCars,
+                }))}
+                columns={[
+                  { field: 'car', headerName: 'Car', flex: 1 },
+                  { field: 'count', headerName: 'Trips', flex: 1 },
+                ]}
+                pageSizeOptions={[5, 10, 20]}
+                autoHeight
+                sx={{
+                  '& .MuiDataGrid-columnHeader': {
+                    backgroundColor: '#FFFF00',
+                    color: '#000',
+                    fontSize: '0.9rem',
+                    fontWeight: 700,
+                  },
+                  '& .MuiDataGrid-columnHeaderTitle': {
+                        fontWeight: '900 !important',
+                      },
+                  '& .MuiDataGrid-cell': {
+                    backgroundColor: '#77BFFF',
+                    color: '#000',
+                    fontSize: '1rem',
+                    fontWeight: 700,
+                  },
+                  '& .MuiToolbar-root': {
+                        backgroundColor: '#FFFF00',
+                        color: '#000',
+                        fontSize: '0.9rem',
+                        fontWeight: 700,
+                      },
+                }}
+              />
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseCarModal}>Close</Button>
+          </DialogActions>
+        </Dialog>
       </Main>
     </Box>
   );
