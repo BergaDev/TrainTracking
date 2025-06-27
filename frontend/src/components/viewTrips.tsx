@@ -168,7 +168,7 @@ export default function ViewTrips() {
               <ListItemIcon>
                 <DashboardIcon />
               </ListItemIcon>
-              <ListItemText primary="Dashboard" />
+              <ListItemText primary="New Trip" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>

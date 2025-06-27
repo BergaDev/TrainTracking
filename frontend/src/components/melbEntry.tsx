@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/globals.css';
-import ManualEntry from './melbEntry';
 
 import {
   Box,
@@ -29,12 +28,12 @@ interface Station {
   name: string;
 }
 
-interface NewTripProps {
+interface MelbourneTripProps {
   setCarTimes: (times: number) => void;
   setSetTimes: (times: number) => void;
 }
 
-const NewTrip: React.FC<NewTripProps> = ({ setCarTimes, setSetTimes }) => {
+const MelbourneTrip: React.FC<MelbourneTripProps> = ({ setCarTimes, setSetTimes }) => {
   const [setCarQuery, setSetCarQuery] = useState('');
   const [originStationQuery, setOriginStationQuery] = useState('');
   const [destinationStationQuery, setDestinationStationQuery] = useState('');
@@ -72,7 +71,7 @@ const NewTrip: React.FC<NewTripProps> = ({ setCarTimes, setSetTimes }) => {
   const handleSetCarSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.get(`/api/trainData/search/train/${setCarQuery}`);
+      const response = await axios.get(`/api/trainData/search/train/melbourne/${setCarQuery}`);
       setCarSetResults(response.data);
       setHasSearched(true);
     } catch (error) {
@@ -83,7 +82,7 @@ const NewTrip: React.FC<NewTripProps> = ({ setCarTimes, setSetTimes }) => {
   const handleOriginStationSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.get(`/api/stationData/search/station/${originStationQuery}`);
+      const response = await axios.get(`/api/stationData/search/station/melbourne/${originStationQuery}`);
       setOriginStationResults(response.data);
       setHasSearched(true);
     } catch (error) {
@@ -94,7 +93,7 @@ const NewTrip: React.FC<NewTripProps> = ({ setCarTimes, setSetTimes }) => {
   const handleDestinationStationSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await axios.get(`/api/stationData/search/station/${destinationStationQuery}`);
+      const response = await axios.get(`/api/stationData/search/station/melbourne/${destinationStationQuery}`);
       setDestinationStationResults(response.data);
       setHasSearched(true);
     } catch (error) {
@@ -185,7 +184,7 @@ const NewTrip: React.FC<NewTripProps> = ({ setCarTimes, setSetTimes }) => {
                       label="Set or carriage Num"
                       value={setCarQuery}
                       onChange={(e) => setSetCarQuery(e.target.value)}
-                      placeholder="A73"
+                      placeholder="187M"
                       required
                     />
                   </Grid>
@@ -369,4 +368,4 @@ const NewTrip: React.FC<NewTripProps> = ({ setCarTimes, setSetTimes }) => {
   );
 };
 
-export default NewTrip;
+export default MelbourneTrip;

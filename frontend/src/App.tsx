@@ -11,6 +11,7 @@ import ViewTrips from './components/viewTrips'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Settings from './components/settings'
 import TrainSearch from './components/trainSearch'
+import MelbourneTrip from './components/melbEntry'
 
 function App() {
   const [message, setMessage] = useState<string>('');

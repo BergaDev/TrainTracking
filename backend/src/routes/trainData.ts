@@ -62,4 +62,16 @@ router.get('/search/train/:query', async (req, res) => {
   }
 });
 
+router.get('/search/train/melbourne/:query', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT * FROM melb_car_sets WHERE SetNum LIKE ? OR CarNum LIKE ?', [`%${req.params.query}%`, `%${req.params.query}%`]);
+    res.json(rows);
+  } catch (error: any) {
+    console.error('Error fetching car sets:', {
+      message: error.message
+    });
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 export default router;
