@@ -55,10 +55,10 @@ const theme = createTheme({
     MuiSelect: {
       styleOverrides: {
         select: {
-          backgroundColor: '#fff',
+          backgroundColor: '#FFFF00',
         },
         icon: {
-          color: '#1976d2',
+          color: '#000',
         },
       },
     },

@@ -38,6 +38,7 @@ import {
   Dashboard as DashboardIcon,
   Train as TrainIcon,
   Settings as SettingsIcon,
+  EmojiEvents as ChallengesIcon,
 } from '@mui/icons-material';
 import axios from 'axios';
 import { DataGrid } from '@mui/x-data-grid';
@@ -177,6 +178,14 @@ export default function ViewTrips() {
                 <TrainIcon />
               </ListItemIcon>
               <ListItemText primary="Trains" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => handleNavigation('/challenges')}>
+              <ListItemIcon>
+                <ChallengesIcon />
+              </ListItemIcon>
+              <ListItemText primary="Challenges" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>

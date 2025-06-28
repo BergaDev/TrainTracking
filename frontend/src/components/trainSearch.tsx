@@ -36,6 +36,7 @@ import {
   Dashboard as DashboardIcon,
   Train as TrainIcon,
   Settings as SettingsIcon,
+  EmojiEvents as ChallengesIcon,
 } from '@mui/icons-material';
 
 const drawerWidth = 240;
@@ -222,7 +223,7 @@ const TrainSearch: React.FC = () => {
               <ListItemIcon>
                 <DashboardIcon />
               </ListItemIcon>
-              <ListItemText primary="Dashboard" />
+              <ListItemText primary="New Trip" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -231,6 +232,14 @@ const TrainSearch: React.FC = () => {
                 <TrainIcon />
               </ListItemIcon>
               <ListItemText primary="Trains" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => handleNavigation('/challenges')}>
+              <ListItemIcon>
+                <ChallengesIcon />
+              </ListItemIcon>
+              <ListItemText primary="Challenges" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>

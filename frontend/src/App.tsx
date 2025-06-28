@@ -12,6 +12,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Settings from './components/settings'
 import TrainSearch from './components/trainSearch'
 import MelbourneTrip from './components/melbEntry'
+import Challenges from './components/challenges'
 
 function App() {
   const [message, setMessage] = useState<string>('');
@@ -39,6 +40,7 @@ function App() {
         <Route path="/view-trips" element={<ViewTrips />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/train-search" element={<TrainSearch />} />
+        <Route path="/challenges" element={<Challenges />} />
       </Routes>
     </Router>
   );

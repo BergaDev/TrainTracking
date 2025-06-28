@@ -58,4 +58,18 @@ router.get('/search/station/melbourne/:query', async (req, res) => {
   }
 });
 
+router.get('/search/station/combinedStates/:query', async (req, res) => {
+  try {
+    const [rows] = await pool.query('SELECT name FROM stations WHERE name LIKE ?', [`%${req.params.query}%`]) as [any[], any];
+    const [rows2] = await pool.query('SELECT name FROM melb_stations WHERE name LIKE ?', [`%${req.params.query}%`]) as [any[], any];
+    const combinedStates = [...rows, ...rows2];
+    res.json(combinedStates);
+  } catch (error: any) {
+    console.error('Error fetching stations:', {
+      message: error.message
+    });
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 export default router;
