@@ -88,7 +88,7 @@ router.get('/tripsStats/pastMonth/:userID', async (req, res) => {
 
   router.get('/tripsStats/commonSet/:userID', async (req, res) => {
     try {
-      const [rows] = await pool.query('SELECT setNum, COUNT(*) as frequentSets FROM userData WHERE userID = ? AND setNum IS NOT NULL AND setNum != "Metro" GROUP BY setNum ORDER BY frequentSets DESC LIMIT 1', [req.params.userID]);
+      const [rows] = await pool.query('SELECT setNum, COUNT(*) as frequentSets FROM userData WHERE userID = ? AND setNum IS NOT NULL AND setNum != "Metro" GROUP BY setNum ORDER BY frequentSets DESC LIMIT 5', [req.params.userID]);
       res.json(rows);
     } catch (error: any) {
       console.error('Error fetching all trips:', {
@@ -100,7 +100,8 @@ router.get('/tripsStats/pastMonth/:userID', async (req, res) => {
 
   router.get('/tripsStats/commonCar/:userID', async (req, res) => {
     try {
-      const [rows] = await pool.query('SELECT carNum, COUNT(*) as frequentCars FROM userData WHERE userID = ? AND carNum IS NOT NULL AND carNum != "Metro" GROUP BY carNum ORDER BY frequentCars DESC LIMIT 1', [req.params.userID]);
+      console.log('Is triggered commonCar');
+      const [rows] = await pool.query('SELECT carNum, COUNT(*) as frequentCars FROM userData WHERE userID = ? AND carNum IS NOT NULL AND carNum != "Metro" GROUP BY carNum ORDER BY frequentCars DESC LIMIT 5', [req.params.userID]);
       res.json(rows);
     } catch (error: any) {
       console.error('Error fetching all trips:', {

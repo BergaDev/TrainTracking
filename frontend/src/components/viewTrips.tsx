@@ -106,6 +106,7 @@ export default function ViewTrips() {
   const [open, setOpen] = useState(false);
   const [stationModalOpen, setStationModalOpen] = useState(false);
   const [carModalOpen, setCarModalOpen] = useState(false);
+  const [setModalOpen, setSetModalOpen] = useState(false);
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -124,8 +125,10 @@ export default function ViewTrips() {
 
   const handleOpenStationModal = () => setStationModalOpen(true);
   const handleCloseStationModal = () => setStationModalOpen(false);
-  const handleOpenCarModal = () => setCarModalOpen(true);
-  const handleCloseCarModal = () => setCarModalOpen(false);
+    const handleOpenCarModal = () => setCarModalOpen(true);
+    const handleCloseCarModal = () => setCarModalOpen(false);
+    const handleOpenSetModal = () => setSetModalOpen(true);
+    const handleCloseSetModal = () => setSetModalOpen(false);
   return (
     <Box sx={{ display: 'flex', backgroundColor: '#2D9DFF', minHeight: '100vh' }}>
       <AppBarStyled position="fixed" open={open}>
@@ -237,15 +240,18 @@ export default function ViewTrips() {
                 </Typography>
               </Paper>
             </Grid>
-            <Grid item xs={12} md={4}>
+
+
+           <Grid item xs={12} md={4}>
               <Paper
+                onClick={handleOpenSetModal}
                 sx={{
                   p: { xs: 1.5, md: 2 },
                   display: 'flex',
                   flexDirection: 'column',
                   height: { xs: 120, md: 140 },
                 }}
-              >
+                >
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
                   Most Common Set
                 </Typography>
@@ -264,7 +270,7 @@ export default function ViewTrips() {
                   flexDirection: 'column',
                   height: { xs: 120, md: 140 },
                 }}
-              >
+                >
                 <Typography component="h2" variant="h6" color="primary" gutterBottom>
                   Most Common Car
                 </Typography>
@@ -521,6 +527,53 @@ export default function ViewTrips() {
           </DialogContent>
           <DialogActions>
             <Button onClick={handleCloseCarModal}>Close</Button>
+          </DialogActions>
+        </Dialog>
+        {/* Modal for Most Frequent Sets */}
+        <Dialog open={setModalOpen} onClose={handleCloseSetModal} maxWidth="md" fullWidth>
+          <DialogTitle>Most Common Sets</DialogTitle>
+          <DialogContent>
+            <Box sx={{ height: 400, width: '100%' }}>
+              <DataGrid
+                rows={commonSet.data.map((set: any, idx: number) => ({
+                  id: idx,
+                  set: set.setNum,
+                  count: set.frequentSets,
+                }))}
+                columns={[
+                  { field: 'set', headerName: 'Set', flex: 1 },
+                  { field: 'count', headerName: 'Trips', flex: 1 },
+                ]}
+                pageSizeOptions={[5, 10, 20]}
+                autoHeight
+                sx={{
+                  '& .MuiDataGrid-columnHeader': {
+                    backgroundColor: '#FFFF00',
+                    color: '#000',
+                    fontSize: '0.9rem',
+                    fontWeight: 700,
+                  },
+                  '& .MuiDataGrid-columnHeaderTitle': {
+                        fontWeight: '900 !important',
+                      },
+                  '& .MuiDataGrid-cell': {
+                    backgroundColor: '#77BFFF',
+                    color: '#000',
+                    fontSize: '1rem',
+                    fontWeight: 700,
+                  },
+                  '& .MuiToolbar-root': {
+                        backgroundColor: '#FFFF00',
+                        color: '#000',
+                        fontSize: '0.9rem',
+                        fontWeight: 700,
+                      },
+                }}
+              />
+            </Box>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseSetModal}>Close</Button>
           </DialogActions>
         </Dialog>
       </Main>
