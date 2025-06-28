@@ -52,6 +52,13 @@ const theme = createTheme({
         },
       },
     },
+    MuiDrawer: {
+      styleOverrides: {
+        root: {
+          fontWeight: 900,
+        }
+      }
+    },
     MuiSelect: {
       styleOverrides: {
         select: {
@@ -75,6 +82,7 @@ const theme = createTheme({
     MuiMenuItem: {
       styleOverrides: {
         root: {
+          fontWeight: 900,
           '&:hover': {
             backgroundColor: '#e3f2fd',
           },
@@ -96,6 +104,7 @@ const theme = createTheme({
     },
     h2: {
       fontFamily: '"Bobaland", "Helvetica", "Arial", sans-serif',
+      fontWeight: 700,
     },
     h3: {
       fontFamily: '"Dotto", "Helvetica", "Arial", sans-serif',
@@ -115,11 +124,11 @@ const theme = createTheme({
     },
     body1: {
       fontFamily: '"Dotto", "Helvetica", "Arial", sans-serif',
-      fontWeight: 400,
+      fontWeight: 700,
     },
     body2: {
       fontFamily: '"Dotto", "Helvetica", "Arial", sans-serif',
-      fontWeight: 300,
+      fontWeight: 700,
     },
     button: {
       fontFamily: '"Dotto", "Helvetica", "Arial", sans-serif',

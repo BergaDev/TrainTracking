@@ -77,8 +77,23 @@ router.get('/challenge/todo/:userID', async (req, res) => {
 
 router.get('/challenge/done/:userID', async (req, res) => {
   try {
+    let timeTaken = 0;
     const [rows] = await pool.query('SELECT * FROM challenge_data WHERE userID = ? AND status = "done"', [req.params.userID]);
-    res.json(rows);
+    for (const challengeRow of rows as any []){
+      //Todo: Calc time between here
+      //Turn date into a continuous string then subtract?
+      const startDate = new Date(challengeRow.startDate);
+      const endDate = new Date(challengeRow.doneDate);
+      const day = 24*60*60*1000;
+      const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
+      const diffDays = Math.ceil(diffTime / day);
+      timeTaken += diffDays;
+      console.log('Time taken: ' + timeTaken);
+      await pool.query('UPDATE challenge_data SET timeTaken = ? WHERE challengeID = ?', [timeTaken, challengeRow.challengeID]);
+    }
+    const [rows2] = await pool.query('SELECT * FROM challenge_data WHERE userID = ?', [req.params.userID]);
+    console.log(rows2);
+    res.json(rows2);
   } catch (error: any) {
     console.error('Error fetching done:', {
       message: error.message

@@ -447,7 +447,7 @@ const Challenges: React.FC = () => {
               <Paper elevation={3} sx={{ p: 3 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <ScheduleIcon sx={{ mr: 1, color: '#FF9800' }} />
-                  <Typography variant="h5" component="h3">
+                  <Typography variant="h5" component="h3" fontWeight={900}>
                     To-Do Challenges
                   </Typography>
                 </Box>
@@ -491,7 +491,7 @@ const Challenges: React.FC = () => {
               <Paper elevation={3} sx={{ p: 3 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
                   <CheckCircleIcon sx={{ mr: 1, color: '#4CAF50' }} />
-                  <Typography variant="h5" component="h3">
+                  <Typography variant="h5" component="h3" fontWeight={900}>
                     Completed Challenges
                   </Typography>
                 </Box>
