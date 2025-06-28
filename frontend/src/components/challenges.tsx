@@ -105,6 +105,7 @@ interface Challenge {
   userID: string;
   challengeTitle: string;
   startDate: string;
+  doneDate: string;
   status: 'todo' | 'done';
   challengeData?: string;
 }
@@ -499,7 +500,7 @@ const Challenges: React.FC = () => {
                     <TableHead>
                       <TableRow>
                         <TableCell>Title</TableCell>
-                        <TableCell>Start Date</TableCell>
+                        <TableCell>Finished Date</TableCell>
                         <TableCell>Status</TableCell>
                       </TableRow>
                     </TableHead>
@@ -507,7 +508,7 @@ const Challenges: React.FC = () => {
                       {completedChallenges.map((challenge) => (
                         <TableRow key={challenge.id}>
                           <TableCell>{challenge.challengeTitle}</TableCell>
-                          <TableCell>{formatDate(challenge.startDate)}</TableCell>
+                          <TableCell>{formatDate(challenge.doneDate)}</TableCell>
                           <TableCell>
                             <Chip 
                               label="Completed" 

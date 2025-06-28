@@ -65,9 +65,10 @@ router.get('/stationChallenges/todo', async (req, res) => {
         const stationName = getObj.isStationName;
         console.log('Station name:', stationName);
         const [stationRows] = await pool.query('SELECT * FROM userData WHERE userID = ? AND (des = ? OR dep = ?) AND date >= ?', [userID, stationName, stationName, challengeRow.startDate]);
-        if ((stationRows as any[]).length > 0) {
+        if (Array.isArray(stationRows) && stationRows.length > 0) {
           console.log(stationRows);
-          const [updateRows] = await pool.query('UPDATE challenge_data SET status = "done" WHERE challengeID = ?', [challengeRow.challengeID]);
+          const tripDate = (stationRows[0] as any).date;
+          const [updateRows] = await pool.query('UPDATE challenge_data SET status = "done", doneDate = ? WHERE challengeID = ?', [tripDate, challengeRow.challengeID]);
           console.log(updateRows);
           console.log('Station found');
         } else {
