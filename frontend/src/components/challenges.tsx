@@ -501,6 +501,7 @@ const Challenges: React.FC = () => {
                       <TableRow>
                         <TableCell>Title</TableCell>
                         <TableCell>Finished Date</TableCell>
+                        <TableCell>Time Taken</TableCell>
                         <TableCell>Status</TableCell>
                       </TableRow>
                     </TableHead>
@@ -509,6 +510,13 @@ const Challenges: React.FC = () => {
                         <TableRow key={challenge.id}>
                           <TableCell>{challenge.challengeTitle}</TableCell>
                           <TableCell>{formatDate(challenge.doneDate)}</TableCell>
+                          <TableCell>
+                            {challenge.timeTaken < 60 
+                              ? `${challenge.timeTaken} minutes`
+                              : challenge.timeTaken < 1440
+                                ? `${(challenge.timeTaken / 60).toFixed(1)} hours` 
+                                : `${(challenge.timeTaken / 1440).toFixed(1)} days`}
+                          </TableCell>
                           <TableCell>
                             <Chip 
                               label="Completed" 

@@ -82,14 +82,15 @@ router.get('/challenge/done/:userID', async (req, res) => {
     for (const challengeRow of rows as any []){
       //Todo: Calc time between here
       //Turn date into a continuous string then subtract?
+      if (challengeRow.timeTaken == null) {
       const startDate = new Date(challengeRow.startDate);
       const endDate = new Date(challengeRow.doneDate);
-      const day = 24*60*60*1000;
-      const diffTime = Math.abs(endDate.getTime() - startDate.getTime());
-      const diffDays = Math.ceil(diffTime / day);
-      timeTaken += diffDays;
-      console.log('Time taken: ' + timeTaken);
-      await pool.query('UPDATE challenge_data SET timeTaken = ? WHERE challengeID = ?', [timeTaken, challengeRow.challengeID]);
+      if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+          timeTaken = Math.round((endDate.getTime() - startDate.getTime()) / (1000 * 60)); // minutes
+        }
+        console.log('Time taken (minutes): ' + timeTaken);
+        await pool.query('UPDATE challenge_data SET timeTaken = ? WHERE challengeID = ?', [timeTaken, challengeRow.challengeID]);
+      }
     }
     const [rows2] = await pool.query('SELECT * FROM challenge_data WHERE userID = ?', [req.params.userID]);
     console.log(rows2);
