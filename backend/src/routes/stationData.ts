@@ -72,4 +72,30 @@ router.get('/search/station/combinedStates/:query', async (req, res) => {
   }
 });
 
+router.get('/search/station/melbourne/gpsLocation/:lat/:lng', async (req, res) => {
+  try {
+    const lat = parseFloat(req.params.lat);
+    const long = parseFloat(req.params.lng);
+    if (isNaN(lat) || isNaN(long)) {
+      return res.status(400).json({ error: 'Invalid lat or long' });
+    }
+    const point = `POINT(${long} ${lat})`;
+    const [rows] = await pool.query(
+      `SELECT 
+        *,
+        ST_Distance_Sphere(ST_PointFromText(?), location) AS distance
+      FROM melb_stations 
+      WHERE ST_Distance_Sphere(ST_PointFromText(?), location) <= 300
+      ORDER BY distance`,
+      [point, point]
+    );
+    res.json(rows);
+  } catch (error: any) {
+    console.error('Error fetching stations:', {
+      message: error.message
+    });
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 export default router;

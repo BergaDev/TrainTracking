@@ -45,6 +45,8 @@ const MelbourneTrip: React.FC<MelbourneTripProps> = ({ setCarTimes, setSetTimes 
   const [destination, setDestination] = useState<string>('');
   const [date, setDate] = useState<string>('');
   const [hasSearched, setHasSearched] = useState(false);
+  const [originLat, setOriginLat] = useState<number>(0);
+  const [originLong, setOriginLong] = useState<number>(0);
 
   //Need to set select options this way
   useEffect(() => {
@@ -85,6 +87,32 @@ const MelbourneTrip: React.FC<MelbourneTripProps> = ({ setCarTimes, setSetTimes 
       const response = await axios.get(`/api/stationData/search/station/melbourne/${originStationQuery}`);
       setOriginStationResults(response.data);
       setHasSearched(true);
+    } catch (error) {
+      console.error('Error searching for stations:', error);
+    }
+  };
+
+  const handleOriginStationSearchGPS = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      if (!navigator.geolocation) {
+        alert('Location access denied, allow permissions and then press the GPS button again');
+      } else {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            setOriginLat(position.coords.latitude);
+            setOriginLong(position.coords.longitude);
+          },
+          (error) => console.error('Error getting GPS:', error)
+        );
+      }
+      try {
+        const response = await axios.get(`/api/stationData/search/station/melbourne/gpsLocation/${originLat}/${originLong}`);
+        setOriginStationResults(response.data);
+        setHasSearched(true);
+      } catch (error) {
+        console.error('Error searching for stations:', error);
+      }
     } catch (error) {
       console.error('Error searching for stations:', error);
     }
@@ -210,7 +238,7 @@ const MelbourneTrip: React.FC<MelbourneTripProps> = ({ setCarTimes, setSetTimes 
                       label="Origin Station"
                       value={originStationQuery}
                       onChange={(e) => setOriginStationQuery(e.target.value)}
-                      placeholder="Thirroul"
+                      placeholder="Southern Cross"
                       required
                     />
                   </Grid>
@@ -221,6 +249,16 @@ const MelbourneTrip: React.FC<MelbourneTripProps> = ({ setCarTimes, setSetTimes 
                       startIcon={<SearchIcon />}
                     >
                       Search
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm="auto">
+                    <Button
+                      type="button"
+                      variant="contained"
+                      startIcon={<SearchIcon />}
+                      onClick={handleOriginStationSearchGPS}
+                    >
+                      GPS
                     </Button>
                   </Grid>
                 </Grid>
@@ -236,7 +274,7 @@ const MelbourneTrip: React.FC<MelbourneTripProps> = ({ setCarTimes, setSetTimes 
                       label="Destination Station"
                       value={destinationStationQuery}
                       onChange={(e) => setDestinationStationQuery(e.target.value)}
-                      placeholder="Thirroul"
+                      placeholder="Flinders Street"
                       required
                     />
                   </Grid>
@@ -296,7 +334,7 @@ const MelbourneTrip: React.FC<MelbourneTripProps> = ({ setCarTimes, setSetTimes 
                               key={station.name} 
                               value={station.name}
                             >
-                              {station.name}
+                              {station.name} - {station.distance.toFixed(0)}m
                             </MenuItem>
                           ))
                         ])}
