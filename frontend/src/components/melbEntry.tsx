@@ -18,7 +18,6 @@ import {
 import type { SelectChangeEvent } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import SendIcon from '@mui/icons-material/Send';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 interface CarSet {
   carNum: string;
@@ -256,7 +255,7 @@ const MelbourneTrip: React.FC<MelbourneTripProps> = ({ setCarTimes, setSetTimes 
                     <Button
                       type="button"
                       variant="contained"
-                      startIcon={<LocationOnIcon />}
+                      startIcon={<SearchIcon />}
                       onClick={handleOriginStationSearchGPS}
                     >
                       GPS
@@ -335,7 +334,7 @@ const MelbourneTrip: React.FC<MelbourneTripProps> = ({ setCarTimes, setSetTimes 
                               key={station.name} 
                               value={station.name}
                             >
-                              {station.name}
+                              {station.name} - {station.distance.toFixed(0)}m
                             </MenuItem>
                           ))
                         ])}
