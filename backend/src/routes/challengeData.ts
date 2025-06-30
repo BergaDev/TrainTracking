@@ -89,7 +89,7 @@ router.get('/challenge/done/:userID', async (req, res) => {
           timeTaken = Math.round((endDate.getTime() - startDate.getTime()) / (1000 * 60)); // minutes
         }
         console.log('Time taken (minutes): ' + timeTaken);
-        await pool.query('UPDATE challenge_data SET timeTaken = ? WHERE challengeID = ?', [timeTaken, challengeRow.challengeID]);
+        await pool.query('UPDATE challenge_data SET timeTaken = ? WHERE challengeID = ? AND status = "done"', [timeTaken, challengeRow.challengeID]);
       }
     }
     const [rows2] = await pool.query('SELECT * FROM challenge_data WHERE userID = ?', [req.params.userID]);
