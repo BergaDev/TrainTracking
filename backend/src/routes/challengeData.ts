@@ -92,7 +92,7 @@ router.get('/challenge/done/:userID', async (req, res) => {
         await pool.query('UPDATE challenge_data SET timeTaken = ? WHERE challengeID = ? AND status = "done"', [timeTaken, challengeRow.challengeID]);
       }
     }
-    const [rows2] = await pool.query('SELECT * FROM challenge_data WHERE userID = ?', [req.params.userID]);
+    const [rows2] = await pool.query('SELECT * FROM challenge_data WHERE userID = ? AND status = "done"', [req.params.userID]);
     console.log(rows2);
     res.json(rows2);
   } catch (error: any) {
