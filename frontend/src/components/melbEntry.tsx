@@ -26,6 +26,7 @@ interface CarSet {
 
 interface Station {
   name: string;
+  distance?: number;
 }
 
 interface MelbourneTripProps {
@@ -338,7 +339,7 @@ const MelbourneTrip: React.FC<MelbourneTripProps> = ({ setCarTimes, setSetTimes 
                               key={station.name} 
                               value={station.name}
                             >
-                              {station.name} - {station.distance.toFixed(0)}m
+                              {station.distance ? `${station.name} - ${station.distance.toFixed(0)}m` : station.name}
                             </MenuItem>
                           ))
                         ])}
