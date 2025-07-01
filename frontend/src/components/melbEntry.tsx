@@ -339,7 +339,7 @@ const MelbourneTrip: React.FC<MelbourneTripProps> = ({ setCarTimes, setSetTimes 
                               key={station.name} 
                               value={station.name}
                             >
-                              {station.distance ? `${station.name} - ${station.distance.toFixed(0)}m` : station.name}
+                              {station.distance !== undefined ? `${station.name} - ${station.distance.toFixed(0)}m` : station.name}
                             </MenuItem>
                           ))
                         ])}
