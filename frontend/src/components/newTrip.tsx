@@ -129,6 +129,9 @@ const NewTrip: React.FC<NewTripProps> = ({ setCarTimes, setSetTimes }) => {
 
       document.getElementById('new-trip-container')?.setAttribute('style', 'display: none;');
       document.getElementById('results-container')?.setAttribute('style', 'display: block;');
+      setTimeout(() => {
+        window.location.reload();
+      }, 1500); //Wait 1.5 to see message
     } catch (error) {
       console.error('Error submitting trip:', error);
     }
