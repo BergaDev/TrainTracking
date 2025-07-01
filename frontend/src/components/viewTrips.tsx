@@ -110,6 +110,8 @@ export default function ViewTrips() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
 
+  const [tripsTodayModelOpen, setTripsTodayModelOpen] = useState(false);
+
   const handleDrawerOpen = () => {
     setOpen(true);
   };
@@ -189,6 +191,14 @@ export default function ViewTrips() {
                 <ChallengesIcon />
               </ListItemIcon>
               <ListItemText primary="Challenges" />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton onClick={() => handleNavigation('/date-trip')}>
+              <ListItemIcon>
+                <TrainIcon />
+              </ListItemIcon>
+              <ListItemText primary="Date Trip" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -576,6 +586,7 @@ export default function ViewTrips() {
             <Button onClick={handleCloseSetModal}>Close</Button>
           </DialogActions>
         </Dialog>
+
       </Main>
     </Box>
   );

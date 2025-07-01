@@ -174,6 +174,21 @@ router.get('/search/train/:query', async (req, res) => {
 });
 */
 
+router.get('/tripStats/dayTrip/:userID/:date', async (req, res) => {
+  try {
+    console.log('Is triggered dayTrip');
+    const [rows] = await pool.query('SELECT * FROM userData WHERE userID = ? AND date LIKE ?', [req.params.userID, req.params.date + '%']);
+    console.log('Rows: ', rows);
+    console.log('Date: ', req.params.date);
+    res.json(rows);
+  } catch (error: any) {
+    console.error('Error fetching all trips:', {
+      message: error.message
+    });
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 router.post('/newTrip', async (req, res) => {
     try {
         const { userID, setNum, carNum, date, dep, des } = req.body;
