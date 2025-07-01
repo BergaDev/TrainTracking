@@ -312,6 +312,7 @@ const MelbourneTrip: React.FC<MelbourneTripProps> = ({ setCarTimes, setSetTimes 
                             Carriage: {result.carNum} - Set: {result.setNum}
                           </MenuItem>
                         ))}
+                        <MenuItem value={`${setCarQuery}|${setCarQuery}`}>Manual - {setCarQuery}</MenuItem>
                       </Select>
                     </FormControl>
                   </Grid>
