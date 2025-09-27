@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/globals.css';
-import ManualEntry from './melbEntry';
+
 
 import {
   Box,

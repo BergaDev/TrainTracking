@@ -29,10 +29,6 @@ import {
   TableRow,
   TableCell,
   Chip,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   Select,
   MenuItem,
   FormControl,
@@ -108,6 +104,7 @@ interface Challenge {
   doneDate: string;
   status: 'todo' | 'done';
   challengeData?: string;
+  timeTaken?: number;
 }
 
 interface Station {
@@ -118,7 +115,7 @@ const Challenges: React.FC = () => {
   const [open, setOpen] = useState(false);
   const [todoChallenges, setTodoChallenges] = useState<Challenge[]>([]);
   const [completedChallenges, setCompletedChallenges] = useState<Challenge[]>([]);
-  const [newChallengeDialog, setNewChallengeDialog] = useState(false);
+
   const [challengeTitle, setChallengeTitle] = useState('');
   const [startDate, setStartDate] = useState('');
   const [challengeData, setChallengeData] = useState('');
@@ -511,11 +508,13 @@ const Challenges: React.FC = () => {
                           <TableCell>{challenge.challengeTitle}</TableCell>
                           <TableCell>{formatDate(challenge.doneDate)}</TableCell>
                           <TableCell>
-                            {challenge.timeTaken < 60 
-                              ? `${challenge.timeTaken} minutes`
-                              : challenge.timeTaken < 1440
-                                ? `${(challenge.timeTaken / 60).toFixed(1)} hours` 
-                                : `${(challenge.timeTaken / 1440).toFixed(1)} days`}
+                            {challenge.timeTaken ? (
+                              challenge.timeTaken < 60 
+                                ? `${challenge.timeTaken} minutes`
+                                : challenge.timeTaken < 1440
+                                  ? `${(challenge.timeTaken / 60).toFixed(1)} hours` 
+                                  : `${(challenge.timeTaken / 1440).toFixed(1)} days`
+                            ) : 'N/A'}
                           </TableCell>
                           <TableCell>
                             <Chip 

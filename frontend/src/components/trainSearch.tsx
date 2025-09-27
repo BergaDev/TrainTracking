@@ -8,10 +8,7 @@ import {
   Box,
   Button,
   Container,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
+
   TextField,
   Typography,
   Paper,
@@ -27,7 +24,7 @@ import {
   ListItemIcon,
   ListItemText,
 } from '@mui/material';
-import type { SelectChangeEvent } from '@mui/material';
+
 import SearchIcon from '@mui/icons-material/Search';
 import { DataGrid } from '@mui/x-data-grid';
 import {
@@ -90,12 +87,13 @@ const DrawerHeader = styled('div')(({ theme }) => ({
 interface CarSet {
   carNum: string;
   setNum: string;
+  typeName?: string;
 }
 
 const TrainSearch: React.FC = () => {
   const [setCarQuery, setSetCarQuery] = useState('');
-  const [carSetResults, setCarSetResults] = useState<CarSet[]>([]);
-  const [selectedCarSet, setSelectedCarSet] = useState<string>('');
+    const [carSetResults, setCarSetResults] = useState<CarSet[]>([]);
+
   const [hasSearched, setHasSearched] = useState(false);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
@@ -123,18 +121,13 @@ const TrainSearch: React.FC = () => {
       }));
       setCarSetResults(resultsWithIds);
       setHasSearched(true);
-      if (response.data.length > 0) {
-        const firstResult = response.data[0];
-        setSelectedCarSet(`${firstResult.carNum}|${firstResult.setNum}`);
-      }
+
     } catch (error) {
       console.error('Error searching for car sets:', error);
     }
   };
 
-  const handleSelectChange = (event: SelectChangeEvent) => {
-    setSelectedCarSet(event.target.value);
-  };
+
 
 
   const carTypeCheck = (carNum: string, typeName: string) => {
@@ -301,8 +294,8 @@ const TrainSearch: React.FC = () => {
                           id: index,
                           carNum: carSet.carNum,
                           setNum: carSet.setNum,
-                          typeName: carSet.typeName,
-                          type: carTypeCheck(carSet.carNum, carSet.typeName),
+                          typeName: carSet.typeName || 'Unknown',
+                          type: carTypeCheck(carSet.carNum, carSet.typeName || ''),
                         }))}
                         columns={[
                           { field: 'carNum', headerName: 'Car', minWidth: 50, flex: 1 },

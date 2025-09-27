@@ -1,9 +1,10 @@
 import { Box, Button, Container, Typography } from '@mui/material';
 import { useState } from 'react';
 import NewTrip from './newTrip';
-import ViewTrips from './viewTrips';
+
 import { useNavigate } from 'react-router-dom';
 import MelbourneTrip from './melbEntry';
+import OtherTrip from './otherTrip';
 
 const Options: React.FC = () => {
   const [showNewTrip, setShowNewTrip] = useState(false);
@@ -11,6 +12,7 @@ const Options: React.FC = () => {
   const [carTimes, setCarTimes] = useState(0);
   const [setTimes, setSetTimes] = useState(0);
   const [showMelbourneTrip, setShowMelbourneTrip] = useState(false);
+  const [showOtherTrip, setShowOtherTrip] = useState(false);
 
   return (
     <Container maxWidth="md" sx={{ backgroundColor: '#2D9DFF', minHeight: '100vh', justifyContent: 'center', alignItems: 'center'}}>
@@ -55,6 +57,17 @@ const Options: React.FC = () => {
         </Button>
       </Box>
       {showMelbourneTrip && <MelbourneTrip setCarTimes={setCarTimes} setSetTimes={setSetTimes} />}
+
+      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+        <Button 
+          variant="contained" 
+          color="primary" 
+          onClick={() => setShowOtherTrip(!showOtherTrip)}
+        >
+          {showOtherTrip ? 'Outside Syd/Melb' : 'Outside Syd/Melb'}
+        </Button>
+      </Box>
+      {showOtherTrip && <OtherTrip setCarTimes={setCarTimes} setSetTimes={setSetTimes} />}
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
         <Button 
           variant="contained" 

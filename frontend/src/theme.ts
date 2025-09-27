@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles';
-import { GlobalStyles } from '@mui/material';
+
 
 const theme = createTheme({
   palette: {
