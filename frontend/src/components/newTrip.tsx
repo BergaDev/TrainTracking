@@ -26,7 +26,8 @@ interface CarSet {
 }
 
 interface Station {
-  name: string;
+  stop_name: string;
+  distance?: number;
 }
 
 interface NewTripProps {
@@ -58,14 +59,14 @@ const NewTrip: React.FC<NewTripProps> = ({ setCarTimes, setSetTimes }) => {
   useEffect(() => {
     if (originStationResults.length > 0) {
       const firstResult = originStationResults[0];
-      setDeparture(firstResult.name);
+      setDeparture(firstResult.stop_name);
     }
   }, [originStationResults]);
 
   useEffect(() => {
     if (destinationStationResults.length > 0) {
       const firstResult = destinationStationResults[0];
-      setDestination(firstResult.name);
+      setDestination(firstResult.stop_name);
     }
   }, [destinationStationResults]);
 
@@ -86,6 +87,35 @@ const NewTrip: React.FC<NewTripProps> = ({ setCarTimes, setSetTimes }) => {
       const response = await axios.get(`/api/stationData/search/station/${originStationQuery}`);
       setOriginStationResults(response.data);
       setHasSearched(true);
+    } catch (error) {
+      console.error('Error searching for stations:', error);
+    }
+  };
+
+  const handleOriginStationSearchGPS = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      if (!navigator.geolocation) {
+        alert('Location access denied, allow permissions and then press the GPS button again');
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const lat = position.coords.latitude;
+          const lng = position.coords.longitude;
+          try {
+            const response = await axios.get(`/api/stationData/search/station/gpsLocation/${lat}/${lng}`);
+            setOriginStationResults(response.data);
+            setHasSearched(true);
+          } catch (error) {
+            console.error('Error searching for stations:', error);
+          }
+        },
+        (error) => {
+          console.error('Error getting GPS:', error);
+          alert('Error getting location. Please check your browser permissions.');
+        }
+      );
     } catch (error) {
       console.error('Error searching for stations:', error);
     }
@@ -153,7 +183,7 @@ const NewTrip: React.FC<NewTripProps> = ({ setCarTimes, setSetTimes }) => {
   };
 
   const groupedOriginStations = originStationResults.reduce((acc, station) => {
-    const firstLetter = station.name.charAt(0).toUpperCase();
+    const firstLetter = station.stop_name.charAt(0).toUpperCase();
     if (!acc[firstLetter]) {
       acc[firstLetter] = [];
     }
@@ -162,7 +192,7 @@ const NewTrip: React.FC<NewTripProps> = ({ setCarTimes, setSetTimes }) => {
   }, {} as Record<string, Station[]>);
 
   const groupedDestinationStations = destinationStationResults.reduce((acc, station) => {
-    const firstLetter = station.name.charAt(0).toUpperCase();
+    const firstLetter = station.stop_name.charAt(0).toUpperCase();
     if (!acc[firstLetter]) {
       acc[firstLetter] = [];
     }
@@ -225,6 +255,16 @@ const NewTrip: React.FC<NewTripProps> = ({ setCarTimes, setSetTimes }) => {
                       startIcon={<SearchIcon />}
                     >
                       Search
+                    </Button>
+                  </Grid>
+                  <Grid item xs={12} sm="auto">
+                    <Button
+                      type="button"
+                      variant="contained"
+                      startIcon={<SearchIcon />}
+                      onClick={handleOriginStationSearchGPS}
+                    >
+                      GPS
                     </Button>
                   </Grid>
                 </Grid>
@@ -298,10 +338,10 @@ const NewTrip: React.FC<NewTripProps> = ({ setCarTimes, setSetTimes }) => {
                           </MenuItem>,
                           ...stations.map((station) => (
                             <MenuItem 
-                              key={station.name} 
-                              value={station.name}
+                              key={station.stop_name} 
+                              value={station.stop_name}
                             >
-                              {station.name}
+                              {station.distance !== undefined ? `${station.stop_name} - ${station.distance.toFixed(0)}m` : station.stop_name}
                             </MenuItem>
                           ))
                         ])}
@@ -324,10 +364,10 @@ const NewTrip: React.FC<NewTripProps> = ({ setCarTimes, setSetTimes }) => {
                           </MenuItem>,
                           ...stations.map((station) => (
                             <MenuItem 
-                              key={station.name} 
-                              value={station.name}
+                              key={station.stop_name} 
+                              value={station.stop_name}
                             >
-                              {station.name}
+                              {station.stop_name}
                             </MenuItem>
                           ))
                         ])}

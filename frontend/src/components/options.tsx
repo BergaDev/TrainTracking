@@ -3,7 +3,6 @@ import { useState } from 'react';
 import NewTrip from './newTrip';
 
 import { useNavigate } from 'react-router-dom';
-import MelbourneTrip from './melbEntry';
 import OtherTrip from './otherTrip';
 
 const Options: React.FC = () => {
@@ -11,7 +10,6 @@ const Options: React.FC = () => {
   const navigate = useNavigate();
   const [carTimes, setCarTimes] = useState(0);
   const [setTimes, setSetTimes] = useState(0);
-  const [showMelbourneTrip, setShowMelbourneTrip] = useState(false);
   const [showOtherTrip, setShowOtherTrip] = useState(false);
 
   return (
@@ -42,21 +40,10 @@ const Options: React.FC = () => {
           color="primary" 
           onClick={() => setShowNewTrip(!showNewTrip)}
         >
-          {showNewTrip ? 'Hide New Trip' : 'New Trip'}
+          {showNewTrip ? 'Hide New Trip' : 'New Syd/Melb Trip'}
         </Button>
       </Box>
       {showNewTrip && <NewTrip setCarTimes={setCarTimes} setSetTimes={setSetTimes} />}
-
-      <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-        <Button 
-          variant="contained" 
-          color="primary" 
-          onClick={() => setShowMelbourneTrip(!showMelbourneTrip)}
-        >
-          {showMelbourneTrip ? 'Hide Melbourne Trip' : 'Melbourne Trip'}
-        </Button>
-      </Box>
-      {showMelbourneTrip && <MelbourneTrip setCarTimes={setCarTimes} setSetTimes={setSetTimes} />}
 
       <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
         <Button 

@@ -1,0 +1,110 @@
+﻿stop_id,stop_name,stop_lat,stop_lon,location_type,parent_station,wheelchair_boarding,level_id,state
+nsw:rail:ABY,Albury Railway Station,-36.08504590,146.92438140,1,,1,,VIC
+vic:rail:ARR,Ardeer Railway Station,-37.78306529,144.80218807,1,,1,,VIC
+vic:rail:ART,Ararat Railway Station,-37.28224082,142.93691176,1,,1,,VIC
+vic:rail:AVL,Avenel Railway Station,-36.89364778,145.22951498,1,,1,,VIC
+vic:rail:BAH,Bacchus Marsh Railway Station,-37.68757821,144.43678516,1,,1,,VIC
+vic:rail:BAT-V,Ballarat Railway Station,-37.55879148,143.85945743,1,,1,,VIC
+vic:rail:BDE,Bairnsdale Railway Station,-37.82872043,147.62761375,1,,1,,VIC
+vic:rail:BET,Beaufort Railway Station,-37.42762724,143.38238116,1,,1,,VIC
+vic:rail:BEW,Berwick Railway Station,-38.03998037,145.34541666,1,,1,,VIC
+vic:rail:BGE,Birregurra Railway Station,-38.32880781,143.78362521,1,,1,,VIC
+vic:rail:BGO,Bendigo Railway Station,-36.76566973,144.28300893,1,,1,,VIC
+vic:rail:BLN,Ballan Railway Station,-37.60429951,144.22544803,1,,1,,VIC
+vic:rail:BMS,Broadmeadows Railway Station,-37.68304926,144.91961322,1,,1,,VIC
+vic:rail:BRF,Broadford Railway Station,-37.20720049,145.04300790,1,,1,,VIC
+vic:rail:BXA,Benalla Railway Station,-36.54455031,145.98391505,1,,1,,VIC
+vic:rail:BYP,Bunyip Railway Station,-38.09910771,145.72075749,1,,1,,VIC
+vic:rail:CFD,Caulfield Railway Station,-37.87745946,145.04252478,1,,1,,VIC
+vic:rail:CGB,Craigieburn Railway Station,-37.60192480,144.94330601,1,,1,,VIC
+vic:rail:CHI,Chiltern Railway Station,-36.15563663,146.61137475,1,,1,,VIC
+vic:rail:CKF,Clarkefield Railway Station,-37.48349769,144.74537264,1,,1,,VIC
+vic:rail:CLA,Clayton Railway Station,-37.92468255,145.12053436,1,,1,,VIC
+vic:rail:CLU,Clunes Railway Station,-37.30301059,143.78208969,1,,1,,VIC
+vic:rail:CME,Castlemaine Railway Station,-37.06284167,144.21397878,1,,1,,VIC
+vic:rail:COL,Colac Railway Station,-38.34337792,143.58665305,1,,1,,VIC
+vic:rail:COR,Corio Railway Station,-38.07283126,144.37976842,1,,1,,VIC
+vic:rail:CPD,Camperdown Railway Station,-38.22890091,143.15092780,1,,1,,VIC
+vic:rail:CWK,Creswick Railway Station,-37.42460539,143.88812365,1,,1,,VIC
+vic:rail:DBK,Donnybrook Railway Station,-37.54202766,144.97020358,1,,1,,VIC
+vic:rail:DEK,Deer Park Railway Station,-37.77728102,144.77108058,1,,1,,VIC
+vic:rail:DGE,Dingee Railway Station,-36.36923291,144.23112034,1,,1,,VIC
+vic:rail:DNG,Dandenong Railway Station,-37.98996792,145.20972537,1,,1,,VIC
+vic:rail:DRN,Drouin Railway Station,-38.13645190,145.85594693,1,,1,,VIC
+vic:rail:EAG-V,Eaglehawk Railway Station,-36.71852539,144.24837990,1,,1,,VIC
+vic:rail:ECH,Echuca Railway Station,-36.13098223,144.75345866,1,,1,,VIC
+vic:rail:EME,Elmore Railway Station,-36.49502002,144.60775752,1,,1,,VIC
+vic:rail:EOA,Euroa Railway Station,-36.74918387,145.56802043,1,,1,,VIC
+vic:rail:EPM,Epsom Railway Station,-36.70628781,144.32105260,1,,1,,VIC
+vic:rail:ESD,Essendon Railway Station,-37.75601170,144.91619750,1,,1,,VIC
+vic:rail:FSS,Flinders Street Railway Station,-37.81830513,144.96696435,1,,1,,VIC
+vic:rail:FSY,Footscray Railway Station,-37.80141343,144.90202006,1,,1,,VIC
+vic:rail:GAR-V,Garfield Railway Station,-38.09103062,145.67422472,1,,1,,VIC
+vic:rail:GEL,Geelong Railway Station ,-38.14470898,144.35491520,1,,1,,VIC
+vic:rail:GIS,Gisborne Railway Station,-37.45882550,144.59872157,1,,1,,VIC
+vic:rail:GRG,Goornong Railway Station,-36.61518327,144.50347417,1,,1,,VIC
+vic:rail:HCJ,Heathcote Junction Railway Station,-37.37172322,145.02824986,1,,1,,VIC
+vic:rail:HUY,Huntly Railway Station,-36.66584794,144.36982046,1,,1,,VIC
+vic:rail:KER,Kerang Railway Station,-35.73312162,143.92442509,1,,1,,VIC
+vic:rail:KET,Kilmore East Station,-37.29321027,144.98356599,1,,1,,VIC
+vic:rail:KFT,Kangaroo Flat Railway Station,-36.79483364,144.24899016,1,,1,,VIC
+vic:rail:KYN,Kyneton Railway Station,-37.25827885,144.45060159,1,,1,,VIC
+vic:rail:LRA,Lara Railway Station,-38.02242764,144.41440429,1,,1,,VIC
+vic:rail:LRR,Little River Railway Station,-37.96292909,144.49848487,1,,1,,VIC
+vic:rail:LWY,Longwarry Railway Station,-38.11099211,145.76686029,1,,1,,VIC
+vic:rail:MAS,Marshall Railway Station,-38.19854900,144.35505671,1,,1,,VIC
+vic:rail:MBY,Maryborough Railway Station,-37.05090849,143.74240234,1,,1,,VIC
+vic:rail:MDN,Macedon Railway Station,-37.42357331,144.56139685,1,,1,,VIC
+vic:rail:MEL,Melton Railway Station,-37.70347382,144.57209861,1,,1,,VIC
+vic:rail:MMY-V,Malmsbury Railway Station,-37.18974032,144.37532317,1,,1,,VIC
+vic:rail:MOE,Moe Railway Station,-38.17689039,146.26054896,1,,1,,VIC
+vic:rail:MPA,Mooroopna Railway Station,-36.39912828,145.35821484,1,,1,,VIC
+vic:rail:MST,Murchison East Railway Station,-36.61314794,145.24063556,1,,1,,VIC
+vic:rail:MWL,Morwell Railway Station,-38.23674592,146.39677567,1,,1,,VIC
+vic:rail:NGE,Nagambie Railway Station,-36.78546410,145.16035666,1,,1,,VIC
+vic:rail:NGL,North Geelong Railway Station,-38.12268295,144.35231162,1,,1,,VIC
+vic:rail:NME,North Melbourne Railway Station,-37.80630984,144.94151017,1,,1,,VIC
+vic:rail:NNG,Nar Nar Goon Railway Station,-38.08159155,145.57166573,1,,1,,VIC
+vic:rail:NSH,North Shore Railway Station,-38.09837714,144.36532142,1,,1,,VIC
+vic:rail:PKM,Pakenham Railway Station,-38.08061397,145.48637907,1,,1,,VIC
+vic:rail:PYD,Pyramid Railway Station,-36.05341470,144.11332145,1,,1,,VIC
+vic:rail:RAY,Raywood Railway Station,-36.53195927,144.20116104,1,,1,,VIC
+vic:rail:RBK,Rockbank Railway Station ,-37.72926127,144.65063148,1,,1,,VIC
+vic:rail:RIK,Riddells Creek Railway Station,-37.46512379,144.67983071,1,,1,,VIC
+vic:rail:RMD,Richmond Railway Station,-37.82407446,144.99016426,1,,1,,VIC
+vic:rail:ROE,Rosedale Railway Station,-38.15640367,146.78696637,1,,1,,VIC
+vic:rail:ROR,Rochester Railway Station,-36.36236050,144.69868134,1,,1,,VIC
+vic:rail:RVH,Caroline Springs Railway Station,-37.76612649,144.73573715,1,,1,,VIC
+vic:rail:SAE,Sale Railway Station,-38.10310272,147.05480513,1,,1,,VIC
+vic:rail:SDP,Sherwood Park Railway Station,-38.38638239,142.53884888,1,,1,,VIC
+vic:rail:SER,Seymour Railway Station,-37.02472873,145.13772862,1,,1,,VIC
+vic:rail:SHT,Springhurst Railway Station,-36.18589340,146.47041695,1,,1,,VIC
+vic:rail:SNH,Shepparton Railway Station,-36.38379101,145.40649749,1,,1,,VIC
+vic:rail:SOG,South Geelong Railway Station,-38.15865863,144.35898705,1,,1,,VIC
+vic:rail:SSS,Southern Cross Railway Station,-37.81866310,144.95277706,1,,1,,VIC
+vic:rail:STD,Stratford Railway Station,-37.96704739,147.08146945,1,,1,,VIC
+vic:rail:SUN,Sunshine Railway Station,-37.78853633,144.83287820,1,,1,,VIC
+vic:rail:SUY,Sunbury Railway Station,-37.57928396,144.72798098,1,,1,,VIC
+vic:rail:SWL,Swan Hill Railway Station,-35.34111357,143.56234321,1,,1,,VIC
+vic:rail:TAR,Trafalgar Railway Station,-38.20724230,146.15477284,1,,1,,VIC
+vic:rail:TAT,Talbot Railway Station,-37.17289923,143.70564034,1,,1,,VIC
+vic:rail:TER,Terang Railway Station,-38.23621199,142.91147221,1,,1,,VIC
+vic:rail:TLN,Cobblebank Railway Station,-37.71254554,144.60410782,1,,1,,VIC
+vic:rail:TNT,Tarneit Railway Station,-37.83215468,144.69448757,1,,1,,VIC
+vic:rail:TOK,Tallarook Railway Station,-37.09233454,145.10299728,1,,1,,VIC
+vic:rail:TRN,Traralgon Railway Station,-38.19888494,146.53788212,1,,1,,VIC
+vic:rail:TYN,Tynong Railway Station,-38.08499626,145.62823430,1,,1,,VIC
+vic:rail:VTN,Violet Town Railway Station,-36.63881606,145.71592345,1,,1,,VIC
+vic:rail:WAN,Wallan Railway Station,-37.41653632,145.00535827,1,,1,,VIC
+vic:rail:WBL,Warrnambool Railway Station,-38.38501396,142.47554504,1,,1,,VIC
+vic:rail:WDG,Wandong Railway Station,-37.35467710,145.02641544,1,,1,,VIC
+vic:rail:WED,Wendouree Railway Station,-37.53997217,143.82121077,1,,1,,VIC
+vic:rail:WGL,Warragul Railway Station,-38.16483276,145.93265719,1,,1,,VIC
+vic:rail:WGS,Watergardens Railway Station,-37.70111071,144.77418099,1,,1,,VIC
+vic:rail:WIA,Winchelsea Railway Station,-38.24013506,143.98413389,1,,1,,VIC
+vic:rail:WNO,Woodend Railway Station,-37.35879859,144.52589012,1,,1,,VIC
+vic:rail:WOD,Wodonga Railway Station,-36.10584513,146.87126565,1,,1,,VIC
+vic:rail:WPP,Waurn Ponds Railway Station,-38.21580573,144.30683114,1,,1,,VIC
+vic:rail:WRT,Wangaratta Railway Station,-36.35515492,146.31702684,1,,1,,VIC
+vic:rail:WVL,Wyndham Vale Railway Station,-37.87252742,144.60835702,1,,1,,VIC
+vic:rail:YON,Yarragon Railway Station,-38.20315754,146.06306280,1,,1,,VIC

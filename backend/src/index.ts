@@ -9,7 +9,7 @@ import challengeDataRoutes, { initializeDatabase as initializeChallengeDatabase 
 import automatedChecksRoutes, { initializeDatabase as initializeAutomatedChecks } from './routes/automatedChecks';
 // Load both .env and .db.env files
 dotenv.config();
-dotenv.config({ path: '.db.env' });
+dotenv.config({ path: 'src/.db.env' });
 
 // Debug log to verify environment variables
 console.log('Environment variables loaded:', {
@@ -20,7 +20,7 @@ console.log('Environment variables loaded:', {
 });
 
 const app = express();
-const port = process.env.BACKEND_PORT;
+const port = process.env.BACKEND_PORT || 6969;
 
 // Middleware
 app.use(cors({

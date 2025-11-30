@@ -36,8 +36,18 @@ export function initializeDatabase() {
 
 router.get('/search/station/:query', async (req, res) => {
   try {
-    const [rows] = await pool.query('SELECT name FROM stations WHERE name LIKE ?', [`%${req.params.query}%`]);
-    res.json(rows);
+    console.log('Query:', req.params.query);
+    let multipleTables = [];
+    const [rows] = await pool.query('SELECT stop_name FROM nswstops WHERE stop_name LIKE ?', [`%${req.params.query}%`]);
+    multipleTables.push(...rows as any[]);
+    const [rows2] = await pool.query('SELECT stop_name FROM vicmetrostops WHERE stop_name LIKE ?', [`%${req.params.query}%`]);
+    multipleTables.push(...rows2 as any[]);
+    const [rows3] = await pool.query('SELECT stop_name FROM vicregionalstops WHERE stop_name LIKE ?', [`%${req.params.query}%`]);
+    multipleTables.push(...rows3 as any[]);
+    const [rows4] = await pool.query('SELECT stop_name FROM victramstops WHERE stop_name LIKE ?', [`%${req.params.query}%`]);
+    multipleTables.push(...rows4 as any[]);
+    console.log('Rows:', multipleTables);
+    res.json(multipleTables);
   } catch (error: any) {
     console.error('Error fetching stations:', {
       message: error.message
@@ -72,24 +82,56 @@ router.get('/search/station/combinedStates/:query', async (req, res) => {
   }
 });
 
-router.get('/search/station/melbourne/gpsLocation/:lat/:lng', async (req, res) => {
+router.get('/search/station/gpsLocation/:lat/:lng', async (req, res) => {
   try {
     const lat = parseFloat(req.params.lat);
     const long = parseFloat(req.params.lng);
     if (isNaN(lat) || isNaN(long)) {
       return res.status(400).json({ error: 'Invalid lat or long' });
     }
-    const point = `POINT(${long} ${lat})`;
+    let multipleTables = [];
     const [rows] = await pool.query(
       `SELECT 
         *,
-        ST_Distance_Sphere(ST_PointFromText(?), location) AS distance
-      FROM melb_stations 
-      WHERE ST_Distance_Sphere(ST_PointFromText(?), location) <= 300
+        ST_Distance_Sphere(ST_SRID(POINT(?, ?), 4326), ST_SRID(location, 4326)) AS distance
+      FROM nswstops 
+      WHERE ST_Distance_Sphere(ST_SRID(POINT(?, ?), 4326), ST_SRID(location, 4326)) <= 300
       ORDER BY distance`,
-      [point, point]
+      [long, lat, long, lat]
     );
-    res.json(rows);
+    multipleTables.push(...rows as any[]);
+    const [rows2] = await pool.query(
+      `SELECT 
+        *,
+        ST_Distance_Sphere(ST_SRID(POINT(?, ?), 4326), ST_SRID(location, 4326)) AS distance
+      FROM vicmetrostops 
+      WHERE ST_Distance_Sphere(ST_SRID(POINT(?, ?), 4326), ST_SRID(location, 4326)) <= 300
+      ORDER BY distance`,
+      [long, lat, long, lat]
+    );
+    multipleTables.push(...rows2 as any[]);
+    const [rows3] = await pool.query(
+      `SELECT 
+        *,
+        ST_Distance_Sphere(ST_SRID(POINT(?, ?), 4326), ST_SRID(location, 4326)) AS distance
+      FROM vicregionalstops 
+      WHERE ST_Distance_Sphere(ST_SRID(POINT(?, ?), 4326), ST_SRID(location, 4326)) <= 300
+      ORDER BY distance`,
+      [long, lat, long, lat]
+    );
+    multipleTables.push(...rows3 as any[]);
+    const [rows4] = await pool.query(
+      `SELECT 
+        *,
+        ST_Distance_Sphere(ST_SRID(POINT(?, ?), 4326), ST_SRID(location, 4326)) AS distance
+      FROM victramstops 
+      WHERE ST_Distance_Sphere(ST_SRID(POINT(?, ?), 4326), ST_SRID(location, 4326)) <= 300
+      ORDER BY distance`,
+      [long, lat, long, lat]
+    );
+    multipleTables.push(...rows4 as any[]);
+    console.log('Rows:', multipleTables);
+    res.json(multipleTables);
   } catch (error: any) {
     console.error('Error fetching stations:', {
       message: error.message

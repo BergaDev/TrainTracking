@@ -52,8 +52,12 @@ router.get('/', async (req, res) => {
 
 router.get('/search/train/:query', async (req, res) => {
   try {
+    let multipleTables = [];
     const [rows] = await pool.query('SELECT * FROM car_sets WHERE SetNum LIKE ? OR CarNum LIKE ?', [`%${req.params.query}%`, `%${req.params.query}%`]);
-    res.json(rows);
+    multipleTables.push(...rows as any[]);
+    const [rows2] = await pool.query('SELECT * FROM melb_car_sets WHERE SetNum LIKE ? OR CarNum LIKE ?', [`%${req.params.query}%`, `%${req.params.query}%`]);
+    multipleTables.push(...rows2 as any[]);
+    res.json(multipleTables);
   } catch (error: any) {
     console.error('Error fetching car sets:', {
       message: error.message
